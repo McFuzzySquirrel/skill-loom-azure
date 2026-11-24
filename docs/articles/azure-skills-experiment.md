@@ -56,7 +56,7 @@ source of truth for phase status.
 
 ## End-to-end workflow
 
-![Skill Loom Foundry end-to-end workflow](images/skill-loom-foundry-end-to-end-workflow.png)
+![Skill Loom Azure end-to-end workflow](images/skill-loom-foundry-end-to-end-workflow.png)
 
 The flow shows the reviewed-skill admin path, authenticated local and Foundry
 clients, API and Blob operations, and user-directed local transfer. It does not
@@ -3361,7 +3361,7 @@ skill-detail retrieval remains pending the skill-detail retrieval work.
 
 _Plan reference: live skill-detail retrieval (P4-C10)._
 
-**Project owner:** Requested an end-to-end flow for Skill Loom Foundry.
+**Project owner:** Requested an end-to-end flow for Skill Loom Azure.
 
 **GitHub Copilot CLI coding agent:** Traced the committed client, Entra/API
 authorization, catalog/chain operations, Blob persistence, and local-transfer
@@ -3782,3 +3782,28 @@ links. The implementation plan records the change as E-185.
 **Evidence limits:** Documentation-only change. No live Azure, Entra, Blob,
 Foundry, or MCP operation was performed, and no Azure resources were
 provisioned.
+
+### Cross-phase documentation — Skill Loom Azure rename — 24 November 2026
+
+_Plan reference: project-name refresh evidence (E-186)._
+
+**Project owner/requester:** Asked to replace the previous display name with
+Skill Loom Azure.
+
+**OpenCode coding agent:** Replaced the display name in the README, release
+notes, guides, demo script, article, OpenAPI title, security policy,
+landing-zone metadata, and local adapter description. Kept stable identifiers
+such as the package name, azd project name, ACR image path, Entra app
+registration names, old repository links, and image filenames unchanged to avoid
+breaking the deployed environment or historical references.
+
+**Skills used:** `create-project-documentation`.
+
+**Tools used:** `npm run check`; `npx markdownlint-cli2` across 28 documents; a
+local Markdown link scan; and `git diff --check`.
+
+**Outcome/evidence:** Display-name references were updated and all local checks
+passed. The implementation plan records the change as E-186.
+
+**Evidence limits:** Documentation and metadata text only. No live Azure, Entra,
+or deployment operation was run.

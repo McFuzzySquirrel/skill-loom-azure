@@ -1,6 +1,6 @@
 # Optional Foundry integration
 
-Foundry is not required for the Skill Loom Foundry API or local development.
+Foundry is not required for the Skill Loom Azure API or local development.
 The core adopter deployment is documented in
 [`docs/deployment.md`](../../docs/deployment.md). It does not create Foundry
 resources.

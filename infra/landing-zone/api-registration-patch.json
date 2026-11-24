@@ -2,8 +2,8 @@
   "api": {
     "oauth2PermissionScopes": [
       {
-        "adminConsentDescription": "Allows the signed-in user to access the Skill Loom Foundry API.",
-        "adminConsentDisplayName": "Access Skill Loom Foundry API",
+        "adminConsentDescription": "Allows the signed-in user to access the Skill Loom Azure API.",
+        "adminConsentDisplayName": "Access Skill Loom Azure API",
         "id": "e0740fac-a008-4cec-9772-d5915248e8a7",
         "isEnabled": true,
         "type": "Admin",

@@ -1,10 +1,10 @@
-# Skill Loom Foundry
+# Skill Loom Azure
 
 [![CI](https://github.com/McFuzzySquirrel/skill-loom-azure/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/McFuzzySquirrel/skill-loom-azure/actions/workflows/ci.yml)
 [![License](https://img.shields.io/github/license/McFuzzySquirrel/skill-loom-azure)](LICENSE)
 [![Node](https://img.shields.io/badge/node-%3E%3D24-339933)](package.json)
 
-Skill Loom Foundry is an Entra-authenticated Azure proof of concept for
+Skill Loom Azure is an Entra-authenticated Azure proof of concept for
 discovering and transferring Skill Loom chains and reviewed skills through an
 HTTP API and MCP clients. It does not execute chains in the cloud: the caller
 executes steps in its own session.
@@ -49,7 +49,7 @@ validation boundary.
 
 ## About
 
-Skill Loom Foundry separates the discovery and transfer of reusable agent
+Skill Loom Azure separates the discovery and transfer of reusable agent
 content from its execution. An administrator curates a reviewed-skill
 catalog; authenticated clients discover chains and skills, save chains with
 revision checks, and export a portable bundle. The service never runs chain
@@ -93,7 +93,7 @@ layer for Foundry and Copilot CLI clients.
 ```mermaid
 flowchart LR
   Foundry[Foundry agent] -->|Entra token| Toolbox[Foundry Toolbox<br/>optional]
-  Toolbox -->|project managed identity| API[Skill Loom Foundry API]
+  Toolbox -->|project managed identity| API[Skill Loom Azure API]
   Copilot[Copilot CLI] -->|local stdio adapter| API
   API -->|managed identity| Blob[(Azure Blob Storage<br/>documents container)]
   API -->|JSON-lines events| Audit[Audit log]

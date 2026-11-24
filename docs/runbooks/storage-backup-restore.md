@@ -44,7 +44,7 @@ az role assignment create \
 
 ```bash
 umask 077
-backup_dir="$HOME/.local/share/skill-loom-foundry/backups/$(date -u +%Y%m%dT%H%M%SZ)"
+backup_dir="$HOME/.local/share/skill-loom-azure/backups/$(date -u +%Y%m%dT%H%M%SZ)"
 mkdir -p "$backup_dir"
 az storage blob download-batch \
   --account-name "$STORAGE_ACCOUNT" \

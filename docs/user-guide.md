@@ -164,11 +164,11 @@ object. Preserve other entries and keep tenant-specific values local:
   "mcpServers": {
     "skillloom-api": {
       "type": "local",
-      "command": "/path/to/skill-loom-foundry/.venv/bin/python",
+      "command": "/path/to/skill-loom-azure/.venv/bin/python",
       "args": [
-        "/path/to/skill-loom-foundry/scripts/prototype_skillloom_api_mcp_server.py"
+        "/path/to/skill-loom-azure/scripts/prototype_skillloom_api_mcp_server.py"
       ],
-      "cwd": "/path/to/skill-loom-foundry",
+      "cwd": "/path/to/skill-loom-azure",
       "env": {
         "SKILLOOM_API_BASE_URL": "https://<api-host>",
         "SKILLOOM_ENTRA_TENANT_ID": "<single-tenant-guid>",

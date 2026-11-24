@@ -1,4 +1,4 @@
-# Skill Loom Foundry - Unreleased
+# Skill Loom Azure - Unreleased
 
 **Release status:** Not published or tagged. The package manifest's `0.1.0`
 version is private repository metadata, not a service release. This document

@@ -33,7 +33,7 @@ the original Foundry landing zone or the owner's Azure subscription.
 Compile the legacy foundation without deploying:
 
 ```bash
-az bicep build --file infra/p2/main.bicep --outfile /tmp/skill-loom-foundry-p2.json
+az bicep build --file infra/p2/main.bicep --outfile /tmp/skill-loom-azure-p2.json
 ```
 
 Compilation is a static check only. Any deployment needs its own reviewed
