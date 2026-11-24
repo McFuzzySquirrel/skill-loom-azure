@@ -1,0 +1,26 @@
+{
+  "version": 3,
+  "id": "demo-meeting-brief-example",
+  "name": "Demo Meeting Brief",
+  "harness": "copilot",
+  "sessionMode": "fresh",
+  "steps": [
+    {
+      "id": "write-brief",
+      "kind": "skill",
+      "skillName": "Demo Meeting Brief",
+      "instruction": "Apply the reviewed meeting-brief skill to {{notes}}. Do not invent missing owners or dates.",
+      "label": "Write the meeting brief"
+    }
+  ],
+  "inputs": [
+    {
+      "name": "notes",
+      "label": "Meeting notes",
+      "required": true
+    }
+  ],
+  "automaticPermissionOptIn": false,
+  "createdAt": "2026-11-24T00:00:00.000Z",
+  "updatedAt": "2026-11-24T00:00:00.000Z"
+}

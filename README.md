@@ -31,6 +31,8 @@ not prove live behavior. The POC is not production-ready.
 
 See the [user guide](docs/user-guide.md) and
 [administrator guide](docs/admin-guide.md).
+Follow the [end-to-end demo script](docs/demo-script.md) to demonstrate skill
+review, discovery, chain transfer, and the hosted-execution boundary.
 
 ## Quick start
 
