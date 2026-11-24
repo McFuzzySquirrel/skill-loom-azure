@@ -51,7 +51,7 @@ remains the source of truth for phase status.
 | P5 — Hosted runner (Jobs) | `project-execution-journal` | CodeGraph, GitHub Docs (`web_fetch`), repository tools | Review Copilot CLI job authentication; owner deferred hosted execution and keeps personal account local. |
 | P6 — Hardening, pilot rollout, release | — | — | Not started. |
 | Cross-phase — P0/P1 Project setup, decisions, and interchange; P2A Foundry landing zone; P2 Azure foundation and storage; P3 Authenticated API (serve mode); P4 MCP server and Foundry/Copilot integration; P5 Hosted runner (Jobs); P6 Hardening, pilot rollout, release | `project-execution-journal` | `ask_user`, CodeGraph, `md-doc-search`, Git, `view`, `apply_patch` | Record the owner's POC/adopter decisions and update the implementation plan without provisioning Azure resources. |
-| Cross-phase implementation — P0/P1 Project setup, decisions, and interchange; P2A Foundry landing zone; P2 Azure foundation and storage; P3 Authenticated API (serve mode); P4 MCP server and Foundry/Copilot integration; P5 Hosted runner (Jobs); P6 Hardening, pilot rollout, release | `azure-app-onboard`, `project-execution-journal`, `archify` | Azure CLI/Bicep, `azd`, Node.js/npm, Docker/Podman Compose, Git, `git-filter-repo`, GitHub CLI (`gh`), Gitleaks, Tesseract.js, `markdownlint-cli2`, CodeGraph, `md-doc-search`, `web_fetch`, Bash, Python, `rg`, `view`, `apply_patch` | Implement and statically validate adopter-facing Azure/local development paths; scan the public candidate and history; maintain evidence. No Azure resources provisioned. |
+| Cross-phase implementation — P0/P1 Project setup, decisions, and interchange; P2A Foundry landing zone; P2 Azure foundation and storage; P3 Authenticated API (serve mode); P4 MCP server and Foundry/Copilot integration; P5 Hosted runner (Jobs); P6 Hardening, pilot rollout, release | `azure-app-onboard`, `project-execution-journal`, `archify` | Azure CLI/Bicep, `azd`, Node.js/npm, Docker/Podman Compose, Git, `git-filter-repo`, `git archive`, GitHub CLI (`gh`), Gitleaks, Tesseract.js, `sha256sum`, `markdownlint-cli2`, CodeGraph, `md-doc-search`, `web_fetch`, Bash, Python, `rg`, `view`, `apply_patch` | Implement and statically validate adopter-facing Azure/local development paths; scan the public candidate and history; maintain evidence. No Azure resources provisioned. |
 
 ## End-to-end workflow
 
@@ -3361,3 +3361,26 @@ article image embeds. The targeted landing-zone Bicep builds succeeded.
 snapshot rebuilt from the corrected source commit. The new repository is
 private and has not received a root commit or any files; no Azure resources
 were provisioned.
+
+### Cross-phase release setup — Root snapshot pushed — 24 November 2026
+
+**GitHub Copilot CLI coding agent:** Rebuilt the snapshot from source commit
+`69baecf`, initialized a fresh `main` branch, and pushed its single root commit
+`c8e4745` to the new repository while it remained private.
+
+**Skills used:** `project-execution-journal`.
+
+**Tools used:** Git, `git archive`, Gitleaks 8.30.1, GitHub CLI (`gh`),
+Python, and `sha256sum`.
+
+**Outcome/evidence:** The published tree has 107 files, one root commit, one
+`main` branch, and no tags or PR refs. It excludes `.archify` artifacts, local
+Azure/MCP configuration, and the withheld P2A/P3 screenshots. Candidate and
+history Gitleaks scans found only the known Azure Key Vault built-in
+role-definition GUID false positive. Targeted document scans found no
+owner-specific amounts, GUIDs, or subscription IDs; all article image links
+resolve.
+
+**Evidence limits:** The new repository remains private pending the
+authorized visibility change. The original repository also remains private.
+No Azure resources were provisioned and no live Azure checks were performed.
