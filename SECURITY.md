@@ -8,7 +8,7 @@ for this repository. Do not open a public issue containing exploit details.
 
 ## Scope
 
-Skill Loom Foundry is a non-production proof of concept. Its API and MCP
+Skill Loom Azure is a non-production proof of concept. Its API and MCP
 operations require Entra authentication and role checks; its public Azure
 deployment profile is not a production network design. Report defects in
 implemented code and deployment configuration through the private channel

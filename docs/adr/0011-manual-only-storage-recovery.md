@@ -12,7 +12,9 @@ status: Accepted
 - **Deciders:** Project owner (@McFuzzySquirrel)
 - **Date:** 2026-11-21
 
-**Technical Story:** P2-C5, P2-G, and E-039/E-051.
+**Technical Story:** The manual backup/restore policy decision (P2-C5), the
+storage foundation live validation (P2-G), and the recorded restore evidence
+(E-039, E-051).
 
 ## Agent Rules
 
@@ -27,8 +29,8 @@ status: Accepted
 ## Verify
 
 - **Check:** `az bicep build --file infra/p2/main.bicep --stdout`; manually
-  review `docs/runbooks/storage-backup-restore.md` against the P2 Blob
-  retention settings.
+  review `docs/runbooks/storage-backup-restore.md` against the legacy storage
+  foundation Blob retention settings.
 - **Expected:** Bicep compiles with automatic recovery disabled, and the
   runbook requires schema validation and conditional writes.
 

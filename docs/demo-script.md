@@ -12,7 +12,7 @@ write steps against a shared or production environment.
 
 ## What to say
 
-> Skill Loom Foundry is an Entra-protected catalog and transfer layer. An
+> Skill Loom Azure is an Entra-protected catalog and transfer layer. An
 > administrator curates the reviewed-skill catalog; authenticated clients
 > discover skills and chains, save chains with revision checks, and export a
 > portable bundle. The caller—not the hosted service—runs any chain steps.

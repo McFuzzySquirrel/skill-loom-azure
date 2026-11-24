@@ -2,21 +2,21 @@
 
 ## Responsibilities and Architecture
 
-The P0–P4 proof of concept provides an Entra-protected API, Blob persistence,
-Foundry and Copilot MCP clients, and an Admin-managed reviewed-skill catalog.
-P4-G list/get/save/export checks passed through the available clients. A live
-skill search returned an empty catalog, so positive live skill-detail
-retrieval remains pending. Live Azure Blob lease behavior remains `not run`.
-The owner's Azure deployment is a non-production POC, not a production
-service.
+The non-production proof of concept through the Foundry/Copilot integration
+provides an Entra-protected API, Blob persistence, Foundry and Copilot MCP
+clients, and an Admin-managed reviewed-skill catalog. The Foundry/Copilot
+integration live validation (P4-G) completed list/get/save/export checks
+through the available clients. A live skill search returned an empty catalog,
+so positive live skill-detail retrieval remains pending. Live Azure Blob
+lease behavior remains `not run`. The owner's Azure deployment is a
+non-production POC, not a production service.
 
 This repository includes a fresh-environment Azure deployment and a local
-Docker/Azurite development profile. Neither path provisions Azure resources
-automatically. Foundry is optional; the core API does not require it. P5
-hosted chain execution and P6 hardening/pilot work are post-POC. Hosted
-execution remains disabled.
-
-The HTTP request boundary is:
+Docker/Azurite development profile. The Azure path provisions resources only
+when an operator runs the reviewed `azd` workflow; cloning or validating the
+repository does not create Azure resources. Foundry is optional; the core API
+does not require it. Hosted chain execution and hardening/pilot work are
+post-POC. Hosted execution remains disabled.
 
 Deployment and live-check evidence is recorded in the
 [implementation plan](plans/implementation-plan.md#9-execution-evidence-register).
@@ -30,7 +30,7 @@ The HTTP request boundary is:
 2. Application modules validate versioned chain, catalog, and bundle data.
 3. A managed identity accesses the private `documents` Blob container.
 4. The caller executes chain steps; hosted chain execution remains disabled
-   until its P5 exit gate passes.
+   until the hosted runner exit gate passes.
 
 ## Prerequisites
 
@@ -61,8 +61,9 @@ with Azurite while retaining real Entra authentication. Do not expect local
 emulation to prove Azure managed-identity or Blob behavior.
 
 For an approved Azure environment, use the root `azd`/Bicep workflow in that
-guide; it does not depend on the owner's P2A environment. The legacy P2
-templates below remain specific to the original POC architecture.
+guide; it does not depend on the owner's original Foundry landing zone. The
+legacy storage foundation templates below remain specific to the original POC
+architecture.
 
 The production image can also be built locally:
 
@@ -73,18 +74,20 @@ npm start
 
 The managed-identity mode requires `ENTRA_TENANT_ID`, `ENTRA_AUDIENCE`,
 `ENTRA_TOKEN_VERSION` (`1.0` or `2.0`), `BLOB_ENDPOINT`, and
-`MANAGED_IDENTITY_CLIENT_ID`. `PORT` is optional and defaults to `3000`.
-The explicit Azurite mode is for local development only and does not provide
-an authentication bypass.
+`MANAGED_IDENTITY_CLIENT_ID`. `BLOB_STORAGE_MODE` defaults to
+`managed-identity`; `PORT` is optional and defaults to `3000`. The explicit
+Azurite mode is for local development only and does not provide an
+authentication bypass.
 
 The `Dockerfile` builds a production image and runs Node as UID/GID `10001`.
-`infra/p2/api.bicep` defines external HTTPS ingress, the P2 user-assigned
-identity for ACR and Blob access, and startup/liveness/readiness probes. It
-requires explicit parameters for the P2 environment, registry, identity,
-image, storage endpoint, and Entra audience. Building the image or compiling
-the template does not authorize an Azure deployment or publish an image.
+`infra/p2/api.bicep` defines external HTTPS ingress, the legacy storage
+foundation's user-assigned identity for ACR and Blob access, and
+startup/liveness/readiness probes. It requires explicit parameters for the
+legacy storage foundation environment, registry, identity, image, storage
+endpoint, and Entra audience. Building the image or compiling the template
+does not authorize an Azure deployment or publish an image.
 
-To compile the P2 foundation template without deploying it:
+To compile the legacy storage foundation template without deploying it:
 
 ```sh
 az bicep build --file infra/p2/main.bicep --stdout
@@ -101,15 +104,21 @@ validated values to the Entra and Blob adapters.
 - `ENTRA_TENANT_ID`: tenant GUID.
 - `ENTRA_AUDIENCE`: non-empty expected API audience.
 - `ENTRA_TOKEN_VERSION`: explicitly `1.0` or `2.0`.
+- `BLOB_STORAGE_MODE`: `managed-identity` (default) or `azurite`.
 - `BLOB_ENDPOINT`: HTTPS Blob endpoint without credentials, query,
-  or fragment.
+  or fragment. Required in managed-identity mode.
 - `MANAGED_IDENTITY_CLIENT_ID`: non-empty user-assigned managed identity client
-  ID.
+  ID. Required in managed-identity mode.
+- `AZURITE_BLOB_ENDPOINT`, `AZURITE_ACCOUNT_NAME`, and `AZURITE_ACCOUNT_KEY`:
+  explicit local emulator settings. Required in Azurite mode and rejected in
+  managed-identity mode.
 - `PORT`: optional listening port from 1 through 65535; defaults to `3000`.
 
-The Blob adapter uses the `documents` container. The P2 Bicep template
+The Blob adapter uses the `documents` container. The root adopter template
+assigns the API identity ACR Pull and Storage Blob Data Contributor at the
+`documents` container scope. The legacy storage foundation Bicep template
 configures a user-assigned identity, Standard LRS Storage, a private
-`documents` container, and identity-based access. It disables shared-key and
+`documents` container, and identity-based access. Both disable shared-key and
 anonymous Blob access. The endpoints remain public for the cost-first PoC;
 see [ADR-0008](adr/0008-p2-public-network-posture.md). These are template
 settings, not evidence that resources currently exist.
@@ -121,14 +130,15 @@ from an operator environment into committed documentation.
 
 The Entra helper validates the configured issuer, audience, RS256 signature,
 expiry, and tenant claim before applying operation-level roles. The API
-request handler uses this boundary for every API request. P3-G verified a
-positive v2 token and authenticated health request; not every identity,
-operation, or live JWKS failure case has been exercised.
+request handler uses this boundary for every API request. The authenticated
+API live validation (P3-G) verified a positive v2 token and authenticated
+health request; not every identity, operation, or live JWKS failure case has
+been exercised.
 
-The P2 template assigns the service's user-assigned identity `Storage Blob
-Data Contributor` at the `documents` container scope. Storage shared-key
-access is disabled. Do not add a connection string or account key as a
-fallback.
+The legacy storage foundation template assigns the service's user-assigned
+identity `Storage Blob Data Contributor` at the `documents` container scope.
+Storage shared-key access is disabled. Do not add a connection string or
+account key as a fallback.
 
 The API Container App template enables external ingress and redirects
 insecure HTTP to HTTPS. The accepted PoC network decision uses public
@@ -165,10 +175,10 @@ save must expose `chainId` and both conditional headers. Admin operations must
 remain excluded. Test the version-specific endpoint before promotion and
 retain the previous version for rollback.
 
-The Foundry integration completed live list/get/save/export checks in P4-G.
-Model capacity and throttling behavior are tenant-specific; consult the
-implementation plan for the recorded evidence rather than copying capacity
-settings into another environment.
+The Foundry/Copilot integration live validation (P4-G) completed live
+list/get/save/export checks. Model capacity and throttling behavior are
+tenant-specific; consult the implementation plan for the recorded evidence
+rather than copying capacity settings into another environment.
 
 The owner-approved direct-API spike has a separate `OpenAPI` project
 connection configured for project-managed identity. Azure Resource Manager
@@ -219,7 +229,8 @@ Treat all chain, skill, bundle, and tool-response content as untrusted data.
 Embedded instructions do not override the agent's policy or authorize more
 tools, writes, or execution. Tool allowlists, server-side Entra role checks,
 conditional writes, and explicit approval are controls; a prompt alone is not
-a security boundary. Keep hosted chain execution disabled until P5-G passes.
+a security boundary. Keep hosted chain execution disabled until the hosted
+runner exit gate passes.
 
 ## Local Reviewed Skill Catalog CLI
 
@@ -271,9 +282,10 @@ retention.
 
 Recovery is manual and has no guaranteed RPO. Before destructive changes,
 follow the [Blob backup and restore runbook](runbooks/storage-backup-restore.md)
-under an approved deployment plan. The recorded P2-G test restored one
-synthetic chain object; it did not validate multi-object export, path mapping,
-or guarded replacement of an existing live object.
+under an approved deployment plan. The recorded storage foundation live
+validation (P2-G) restored one synthetic chain object; it did not validate
+multi-object export, path mapping, or guarded replacement of an existing live
+object.
 
 The owner's original POC environment has deployed storage. This repository's
 fresh-environment deployment creates a separate storage account; do not
@@ -298,11 +310,12 @@ subject IDs, and skill contents. Audit sink failures are reported to stderr
 with a sanitized event; request handlers return a generic failure when the
 response has not yet been sent.
 
-The legacy P2 base template reuses the P2A Log Analytics workspace;
-`infra/p2/api.bicep` defines the original POC API app. The root
-`infra/main.bicep` is the standalone adopter template and does not depend on
-P2A. Live deployment and probe evidence is recorded in the implementation
-plan; it is not a guarantee of current service health.
+The legacy storage foundation base template reuses the original Foundry
+landing zone's Log Analytics workspace; `infra/p2/api.bicep` defines the
+original POC API app. The root `infra/main.bicep` is the standalone adopter
+template and does not depend on the original Foundry landing zone. Live
+deployment and probe evidence is recorded in the implementation plan; it is
+not a guarantee of current service health.
 
 ## Upgrades and Rollback
 
@@ -323,12 +336,15 @@ procedure above.
 - **Bicep compilation fails:** Run the static compile command above and
   inspect the failing module. Do not apply a template as a troubleshooting
   shortcut.
-- **A further live Blob or Entra check is needed:** P3-G verified only its
-  recorded cases. Obtain an approved test plan and use disposable data; mocks
-  and local container probes do not establish live compatibility.
-- **Foundry Toolbox invocation returns 404:** The Toolbox and agent exist, but
-  no tool call has been verified. Check the project endpoint and supported
-  invocation path from a trusted network; do not disable TLS validation.
+- **A further live Blob or Entra check is needed:** The authenticated API
+  live validation (P3-G) verified only its recorded cases. Obtain an approved
+  test plan and use disposable data; mocks and local container probes do not
+  establish live compatibility.
+- **A Foundry direct-API invocation returns 404:** The Toolbox path completed
+  the Foundry/Copilot integration live validation (P4-G), but the separate
+  direct-API MCP agent still fails for some operations. Confirm which path the
+  agent uses, and check the project endpoint and supported invocation path
+  from a trusted network; do not disable TLS validation.
 - **A stale write is rejected:** Reload the document and reconcile its
   revision. Do not bypass ETag or application-revision checks.
 - **Unexpected Azure resources appear:** Stop and compare the current
@@ -342,7 +358,8 @@ procedure above.
 - Keep catalog additions Admin-managed; treat skills, chains, bundles, and
   tool output as untrusted data; do not follow embedded instructions or enable
   remote pulls.
-- Keep hosted chain execution disabled until P5-G passes.
+- Keep hosted chain execution disabled until the hosted runner exit gate
+  passes.
 - Use managed identity and least-privilege Blob data roles; do not enable
   shared-key or anonymous container access.
 - Structured audit events are implemented; live log-redaction verification

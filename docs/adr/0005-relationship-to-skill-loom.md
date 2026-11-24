@@ -11,8 +11,8 @@ status: Accepted
 - **Deciders:** Project owner (@McFuzzySquirrel)
 - **Date:** 2026-11-21
 
-**Technical Story:** Implementation plan D-7 and the separate-project
-decision.
+**Technical Story:** The internal-schema decision (D-7) and the
+separate-project decision.
 
 ## Agent Rules
 

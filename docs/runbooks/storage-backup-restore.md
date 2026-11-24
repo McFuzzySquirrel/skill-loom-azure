@@ -2,12 +2,14 @@
 
 ## Status and policy
 
-This is the P2-C5 manual-only PoC procedure. No P2 storage account or service
-data currently remains deployed. P2-G exercised backup and restore for one
-synthetic, schema-valid chain object, then tore down the temporary resources
-(E-051, E-053). This did not exercise multi-object batch path mapping,
-replacement of an existing object, or application revision guards. To run
-this procedure again, use an approved deployment plan and owner authorization.
+This procedure implements the manual backup and restore policy (P2-C5). No
+original storage foundation account or service data currently remains
+deployed. The storage foundation live validation (P2-G) exercised backup and
+restore for one synthetic, schema-valid chain object, then tore down the
+temporary resources (E-051, E-053). This did not exercise multi-object batch
+path mapping, replacement of an existing object, or application revision
+guards. To run this procedure again, use an approved deployment plan and
+owner authorization.
 
 The PoC has no scheduled backups, Blob versioning, blob soft delete, container
 soft delete, or automatic retention. Before a destructive data change or
@@ -42,7 +44,7 @@ az role assignment create \
 
 ```bash
 umask 077
-backup_dir="$HOME/.local/share/skill-loom-foundry/backups/$(date -u +%Y%m%dT%H%M%SZ)"
+backup_dir="$HOME/.local/share/skill-loom-azure/backups/$(date -u +%Y%m%dT%H%M%SZ)"
 mkdir -p "$backup_dir"
 az storage blob download-batch \
   --account-name "$STORAGE_ACCOUNT" \
@@ -67,9 +69,9 @@ az role assignment delete \
 ```
 
 Keep the account name and backup location in local operator notes, not in
-committed files. Before using batch download, P3 must define fixed,
-path-safe blob names and verify that the local name mapping remains inside
-`backup_dir`.
+committed files. Before using batch download, the authenticated API (P3) must
+define fixed, path-safe blob names and verify that the local name mapping
+remains inside `backup_dir`.
 
 ## Restore
 
@@ -82,13 +84,15 @@ path-safe blob names and verify that the local name mapping remains inside
    replace an existing blob only with `If-Match` set to the current ETag.
    Never use an unconditional overwrite.
 4. Where a document has an application revision, advance it according to the
-   P3 persistence rules before restoring. Until that guarded restore path is
-   implemented, do not overwrite an existing live object directly.
+   authenticated API's persistence rules before restoring. Until that guarded
+   restore path is implemented, do not overwrite an existing live object
+   directly.
 5. Read back the restored objects and revalidate their schemas and revisions.
    Remove the temporary Contributor assignment and keep the backup until
    verification is complete.
 
 The Azure CLI upload command supports `--if-none-match` and `--if-match`.
-P2-G verified a single-object synthetic restore with a conditional delete and
-conditional create; batch export/path safety and guarded existing-object
-replacement remain unverified.
+The storage foundation live validation (P2-G) verified a single-object
+synthetic restore with a conditional delete and conditional create; batch
+export/path safety and guarded existing-object replacement remain
+unverified.
