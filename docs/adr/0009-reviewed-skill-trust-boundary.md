@@ -10,9 +10,10 @@ status: Accepted
 # ADR-0009: Admin-reviewed skill source
 
 - **Deciders:** Project owner (@McFuzzySquirrel)
-- **Date:** 2026-11-21
+- **Date:** 2026-11-24
 
-**Technical Story:** Implementation plan D-8, P3-C4, and P5-C7.
+**Technical Story:** The admin-managed catalog decision (D-8), the reviewed
+catalog work (P3-C4), and the hosted runner permission defaults (P5-C7).
 
 ## Agent Rules
 
@@ -71,8 +72,9 @@ bindings. It does not execute skills.
 - Admin review is a human responsibility; the service does not scan for
   malware or prove that review was careful.
 - No remote source refresh or native-agent snapshot is available.
-- Audit logging is still pending P3-C5; a returned reviewer subject is not a
-  durable audit record.
+- Structured audit events are implemented (P3-C5), but live log-redaction
+  verification remains pending; a returned reviewer subject is not a durable
+  audit record.
 
 ## Pros and Cons of the Options
 
@@ -99,4 +101,5 @@ bindings. It does not execute skills.
 - Authentication: [ADR-0002](0002-authentication-and-authorization.md).
 - Runner gate: [ADR-0003](0003-run-isolation.md).
 - Implementation: [`src/skills/catalog.ts`](../../src/skills/catalog.ts).
-- Roadmap: P5-C7 in the [implementation plan](../plans/implementation-plan.md).
+- Roadmap: the hosted runner permission defaults (P5-C7) in the
+  [implementation plan](../plans/implementation-plan.md).

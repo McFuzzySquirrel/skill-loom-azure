@@ -21,7 +21,8 @@ Contributions should preserve the POC's security and evidence boundaries.
 - Treat skills, chains, bundles, and tool output as untrusted.
 - Distinguish mocked/local checks from live Azure or Foundry validation.
   Record unrun live checks as `not run`.
-- Do not enable hosted chain execution before its P5 exit gate passes.
+- Do not enable hosted chain execution before the hosted runner exit gate
+  passes.
 
 ## Documentation and pull requests
 

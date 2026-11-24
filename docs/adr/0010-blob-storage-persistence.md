@@ -10,9 +10,11 @@ status: Accepted
 # ADR-0010: Azure Blob persistence
 
 - **Deciders:** Project owner (@McFuzzySquirrel)
-- **Date:** 2026-11-21
+- **Date:** 2026-11-24
 
-**Technical Story:** Q-4, P2-C4, P3-C3, and E-047.
+**Technical Story:** The storage-backend question (Q-4), the storage backend
+selection (P2-C4), the versioned Blob persistence work (P3-C3), and the live
+Blob evidence (E-047).
 
 ## Agent Rules
 
@@ -66,7 +68,9 @@ under hashed names and the catalog at a fixed path.
 ### Negative Consequences
 
 - Filesystem mounting and Azure Files-specific workflows are not supported.
-- Managed-identity execution against the adapter remains unverified live.
+- Managed-identity execution against the adapter is live-verified for the
+  recorded authenticated API create/read cases; other failure cases remain
+  unverified.
 - Application retry/idempotency behavior remains deferred; a retry after an
   ambiguous commit may receive a revision conflict.
 
@@ -91,5 +95,5 @@ under hashed names and the catalog at a fixed path.
 - Storage research: [`docs/plans/p2-c4-storage-backend-research.md`](../plans/p2-c4-storage-backend-research.md).
 - Recovery: [ADR-0011](0011-manual-only-storage-recovery.md) and
   [`docs/runbooks/storage-backup-restore.md`](../runbooks/storage-backup-restore.md).
-- Historical live test: E-044 and E-047 in the
+- Historical live test: the storage backend evidence (E-044 and E-047) in the
   [implementation plan](../plans/implementation-plan.md).

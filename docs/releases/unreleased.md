@@ -6,18 +6,19 @@ describes the current POC baseline and the validation boundary for it.
 
 ## Summary
 
-The P0–P4 proof-of-concept exit gates have passed. The repository now
-provides an Entra-authenticated chain and reviewed-skill service, a
-Foundry/Copilot integration path, a local Docker/Azurite profile, and a
-standalone `azd`/Bicep deployment for a fresh Azure environment. The original
-POC API and clients have been deployed and exercised in a live Azure
+The proof-of-concept exit gates for project setup, the storage foundation,
+the authenticated API, and the Foundry/Copilot integration have passed. The
+repository now provides an Entra-authenticated chain and reviewed-skill
+service, a Foundry/Copilot integration path, a local Docker/Azurite profile,
+and a standalone `azd`/Bicep deployment for a fresh Azure environment. The
+original POC API and clients have been deployed and exercised in a live Azure
 environment, including live Entra-authenticated API operations and Foundry
 and Copilot list/get/save/export checks. The owner also has a deployed
 non-production POC. The service still does not execute chains: callers run
 chain steps in their own sessions.
 
-P5 hosted execution is deferred and P6 hardening, pilot, and release work has
-not started. This is not a production release.
+Hosted execution is deferred and hardening, pilot, and release work has not
+started. This is not a production release.
 
 ## Highlights
 
@@ -34,8 +35,8 @@ not started. This is not a production release.
   Copilot CLI.
 - Added structured audit logging, bounded request handling, a non-root
   container image, and a local Azurite development profile.
-- Added the standalone adopter deployment, the legacy P2 templates, and the
-  optional Foundry landing zone.
+- Added the standalone adopter deployment, the legacy storage foundation
+  templates, and the optional Foundry landing zone.
 - Added user and administrator guides, architecture decisions, a storage
   recovery runbook, an end-to-end demo script, and example data.
 
@@ -62,8 +63,9 @@ service endpoint. For repository development, run `npm ci` followed by
 
 For an independent Azure environment, follow the
 [deployment guide](../deployment.md). The `azd` path creates a fresh resource
-group and does not depend on the owner's P2A environment. Entra registration,
-consent, and role assignment remain operator-managed steps. Review
+group and does not depend on the owner's original Foundry landing zone.
+Entra registration, consent, and role assignment remain operator-managed
+steps. Review
 `azd provision --preview` and obtain resource-owner approval before running
 `azd up`.
 
@@ -76,16 +78,17 @@ data before `azd down`.
 
 - The POC is not production-ready. It uses public Azure endpoints and a public
   Container Apps ingress; this is not a production network boundary.
-- Hosted chain execution is disabled until the P5 exit gate passes. P5 is
-  deferred and P6 has not started.
-- P4-C10 positive live skill-detail retrieval remains pending because the live
-  catalog was empty.
+- Hosted chain execution is disabled until the hosted runner exit gate
+  passes. The hosted runner is deferred and hardening/release has not started.
+- Positive live reviewed-skill detail retrieval remains pending because the
+  live catalog was empty.
 - Live Azure Blob lease expiry, renewal, and managed-identity behavior remain
   `not run`; local tests use mocks and a local emulator.
-- The Foundry Toolbox completed live list/get/save/export checks in P4-G. The
-  separate Foundry direct-API MCP agent path still fails for some operations,
-  and Copilot CLI 1.0.114 cannot complete Toolbox OAuth metadata discovery.
-  The validated Copilot path is the local stdio adapter.
+- The Foundry Toolbox completed live list/get/save/export checks in the
+  Foundry/Copilot integration live validation (P4-G). The separate Foundry
+  direct-API MCP agent path still fails for some operations, and Copilot CLI
+  1.0.114 cannot complete Toolbox OAuth metadata discovery. The validated
+  Copilot path is the local stdio adapter.
 - Foundry model capacity and throttling are tenant-specific and not guaranteed.
 - There is no chain-delete API, no write-rate quota, and no hosted client
   retry or idempotency policy.
@@ -112,12 +115,14 @@ Previously recorded live environment evidence, not re-run for this
 documentation update:
 
 - The original non-production POC API was deployed to Azure Container Apps.
-- P3-G recorded live Entra-authenticated API, RBAC, Blob, stale-revision,
-  traversal, and oversize checks.
-- P4-G recorded live Foundry and Copilot list/get/save/export operations
-  (E-128, E-161).
-- P2-G restored one synthetic Blob object. Multi-object export, path mapping,
-  and guarded replacement of a live object were not validated.
+- The authenticated API live validation (P3-G) recorded live
+  Entra-authenticated API, RBAC, Blob, stale-revision, traversal, and oversize
+  checks.
+- The Foundry/Copilot integration live validation (P4-G) recorded live
+  Foundry and Copilot list/get/save/export operations (E-128, E-161).
+- The storage foundation live validation (P2-G) restored one synthetic Blob
+  object. Multi-object export, path mapping, and guarded replacement of a live
+  object were not validated.
 
 Other recorded checks:
 

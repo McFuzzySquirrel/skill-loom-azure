@@ -10,4 +10,4 @@ The JSON files are validated against `ChainSchema` by
 chains. They are not automatically seeded into a live API; saving them there
 creates persistent records. The skill-linked example requires an
 administrator to add its skill first. Hosted execution remains disabled until
-the P5 exit gate passes.
+the hosted runner exit gate passes.

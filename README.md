@@ -11,19 +11,21 @@ executes steps in its own session.
 
 ## Status
 
-The P0–P4 proof-of-concept exit gates have passed. The owner has a deployed
-non-production POC. The original POC API and clients have been exercised in a
-live Azure environment: P3-G recorded live Entra-authenticated API operations
-and P4-G recorded live Foundry and Copilot list/get/save/export operations.
-The standalone adopter deployment and local Azurite profile have only
-static/local evidence. This repository includes a guided, fresh-environment
-Azure deployment and a local Docker/Azurite development profile. Foundry is
-optional. P5 hosted execution and P6 hardening/pilot work are post-POC;
-hosted execution remains disabled.
+The proof-of-concept exit gates for project setup, the storage foundation,
+the authenticated API, and the Foundry/Copilot integration have passed. The
+owner has a deployed non-production POC. The original POC API and clients have
+been exercised in a live Azure environment: the authenticated API live
+validation (P3-G) recorded live Entra-authenticated API operations and the
+Foundry/Copilot integration live validation (P4-G) recorded live Foundry and
+Copilot list/get/save/export operations. The standalone adopter deployment
+and local Azurite profile have only static/local evidence. This repository
+includes a guided, fresh-environment Azure deployment and a local
+Docker/Azurite development profile. Foundry is optional. Hosted execution and
+hardening/pilot work are post-POC; hosted execution remains disabled.
 
 The implementation plan is the status and evidence source:
-[implementation plan](docs/plans/implementation-plan.md). P4-C10 positive
-live skill-detail retrieval remains pending because the live catalog was
+[implementation plan](docs/plans/implementation-plan.md). Positive live
+reviewed-skill detail retrieval remains pending because the live catalog was
 empty. Live Azure Blob lease behavior remains `not run`; local lease tests do
 not prove live behavior. The POC is not production-ready. See the
 [release notes](docs/releases/unreleased.md) for the current baseline and
@@ -209,7 +211,8 @@ deployment configuration.
   does not pull skills from remote repositories.
 - Chains, skills, bundles, and tool output are untrusted input. Do not execute
   retrieved content or follow instructions embedded in it.
-- Keep hosted chain execution disabled until the P5 exit gate passes.
+- Keep hosted chain execution disabled until the hosted runner exit gate
+  passes.
 
 Report vulnerabilities privately through [`SECURITY.md`](SECURITY.md). Do not
 include credentials, tokens, or tenant-specific identifiers in a report.
@@ -232,10 +235,10 @@ Read [`CONTRIBUTING.md`](CONTRIBUTING.md) before proposing a change. In short:
 
 The following work is planned or unresolved and is **not shipped**:
 
-- P5 hosted chain execution is deferred and remains disabled until its exit
-  gate passes.
-- P6 hardening, pilot, and production release work has not started.
-- P4-C10 positive live skill-detail retrieval is pending because the live
+- Hosted chain execution is deferred and remains disabled until the hosted
+  runner exit gate passes.
+- Hardening, pilot, and production release work has not started.
+- Positive live reviewed-skill detail retrieval is pending because the live
   catalog was empty.
 - Live Azure Blob lease expiry, renewal, and managed-identity behavior remain
   unverified; only local and mocked checks exist.

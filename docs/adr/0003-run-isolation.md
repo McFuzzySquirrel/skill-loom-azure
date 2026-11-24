@@ -11,12 +11,14 @@ status: Accepted
 - **Deciders:** Project owner (@McFuzzySquirrel)
 - **Date:** 2026-11-21
 
-**Technical Story:** Implementation plan D-6 and P5-G.
+**Technical Story:** The phased serve-then-run decision (D-6) and the hosted
+runner exit gate (P5-G).
 
 ## Agent Rules
 
-- **MUST:** Keep hosted chain execution disabled until P3-G, P4-G, and P5-G
-  have passed.
+- **MUST:** Keep hosted chain execution disabled until the authenticated API
+  live validation, the Foundry/Copilot integration live validation, and the
+  hosted runner exit gate have passed (P3-G, P4-G, P5-G).
 - **MUST NOT:** Execute chains inside the serve-mode request process.
 - **MUST:** Before implementing a runner, define per-run isolation,
   concurrency, resource and wall-clock limits, cancellation, egress, and
@@ -26,10 +28,10 @@ status: Accepted
 
 ## Verify
 
-- **Check:** `npm run check`, then manually review the P5 checklist and
-  deployment template before enabling any runner resource.
-- **Expected:** Local tests pass; the plan's P5 exit gate is not marked passed
-  and no runner is deployed.
+- **Check:** `npm run check`, then manually review the hosted runner
+  checklist (P5) and deployment template before enabling any runner resource.
+- **Expected:** Local tests pass; the plan's hosted runner exit gate (P5-G) is
+  not marked passed and no runner is deployed.
 
 ## Context and Problem Statement
 
@@ -63,7 +65,8 @@ The runner remains disabled until its own design and live exit gate pass.
 
 ### Negative Consequences
 
-- Users cannot ask the hosted service to execute a chain until P5 is complete.
+- Users cannot ask the hosted service to execute a chain until the hosted
+  runner (P5) is complete.
 - Job isolation and credential behavior remain unresolved.
 
 ## Pros and Cons of the Options
@@ -83,4 +86,5 @@ The runner remains disabled until its own design and live exit gate pass.
 
 - Related hosting choice: [ADR-0001](0001-hosting-model.md).
 - Trust boundary: [ADR-0009](0009-reviewed-skill-trust-boundary.md).
-- Future work: P5 in the [implementation plan](../plans/implementation-plan.md).
+- Future work: the hosted runner (P5) in the
+  [implementation plan](../plans/implementation-plan.md).

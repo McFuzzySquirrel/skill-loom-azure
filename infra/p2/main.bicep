@@ -1,12 +1,12 @@
 targetScope = 'resourceGroup'
 
-@description('Azure region for the P2 foundation resources')
+@description('Azure region for the legacy storage foundation resources')
 param location string = resourceGroup().location
 
-@description('Name of the existing P2A Log Analytics workspace')
+@description('Name of the existing original Foundry landing zone Log Analytics workspace')
 param logAnalyticsWorkspaceName string
 
-@description('Tags applied to P2 foundation resources')
+@description('Tags applied to legacy storage foundation resources')
 param tags object = {
   project: 'skill-loom-foundry'
   environment: 'poc'

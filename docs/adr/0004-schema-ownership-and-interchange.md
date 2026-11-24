@@ -12,7 +12,8 @@ status: Accepted
 - **Deciders:** Project owner (@McFuzzySquirrel)
 - **Date:** 2026-11-21
 
-**Technical Story:** Implementation plan D-7 and P1-G.
+**Technical Story:** The internal-schema decision (D-7) and the
+schema/interchange exit gate (P1-G).
 
 ## Agent Rules
 

@@ -3,12 +3,13 @@
 ## Who This Is For
 
 This guide is for Foundry and Copilot clients and the people who will use
-them. The P0–P4 non-production POC has no web UI. P4-G list/get/save/export
-checks passed through the available clients. The local stdio adapter uses
-interactive browser authentication with PKCE; the Copilot CLI remote
-Toolbox sample remains unsupported in the tested CLI version because OAuth
-metadata discovery fails before sign-in. A live skill search returned an
-empty catalog, so successful live skill-detail retrieval remains pending.
+them. The non-production POC through the Foundry/Copilot integration has no
+web UI. The Foundry/Copilot integration live validation (P4-G) completed
+list/get/save/export checks through the available clients. The local stdio
+adapter uses interactive browser authentication with PKCE; the Copilot CLI
+remote Toolbox sample remains unsupported in the tested CLI version because
+OAuth metadata discovery fails before sign-in. A live skill search returned
+an empty catalog, so successful live skill-detail retrieval remains pending.
 See the [deployment and local development guide](deployment.md) to deploy
 the API in a separate Azure environment or run it locally with Azurite.
 The OpenAPI document remains the API contract.
@@ -41,14 +42,15 @@ The API roles are:
 - `SkillLoom.User` for normal operations.
 - `SkillLoom.Admin` for normal operations and reviewed catalog additions.
 
-P4-G records successful live list/get/save/export operations through the
-available Foundry and Copilot clients. It does not establish production
-readiness or positive live skill-detail retrieval.
+The Foundry/Copilot integration live validation (P4-G) records successful
+live list/get/save/export operations through the available Foundry and
+Copilot clients. It does not establish production readiness or positive live
+skill-detail retrieval.
 
 ## Foundry Toolbox and Copilot Identity Boundaries
 
-The selected P4 design puts the existing OpenAPI contract inside a Foundry
-Toolbox. Keep the two Entra boundaries distinct:
+The selected Foundry/Copilot integration design puts the existing OpenAPI
+contract inside a Foundry Toolbox. Keep the two Entra boundaries distinct:
 
 - **Caller to Toolbox:** The Toolbox endpoint requires a Foundry-audience
   Entra token (`https://ai.azure.com`). This PoC uses a
@@ -72,8 +74,9 @@ and role requirements still apply to that identity.
 
 The dated evidence and limitations for the Foundry integration are in the
 [implementation plan](plans/implementation-plan.md#9-execution-evidence-register).
-P4-G includes live list/get/save/export checks; those checks do not prove
-future availability or remove Azure model throttling limits.
+The Foundry/Copilot integration live validation (P4-G) includes live
+list/get/save/export checks; those checks do not prove future availability or
+remove Azure model throttling limits.
 
 ## Copilot CLI Toolbox Configuration
 
@@ -85,7 +88,7 @@ Add this entry to the workspace-root `.mcp.json` `mcpServers` object, merging
 it with existing servers rather than replacing the file. Replace the two
 Foundry placeholders with the project endpoint values supplied by the
 operator. This exposes only the four User-authorized chain operations needed
-for P4-G:
+for the integration live validation:
 
 ```json
 {
@@ -120,10 +123,11 @@ receive 404/401, while Entra's organizations OpenID metadata endpoint is
 reachable. No supported workaround has been validated, so this sample is
 configuration-only and does not establish a working integration.
 
-The Toolbox endpoint invokes the P3 API using the Foundry project managed
-identity, which has `SkillLoom.User`. The API therefore sees that shared
-identity, not the signed-in Copilot user. Chain writes still require the API's
-conditional revision header; do not retry an unconditional or stale write.
+The Toolbox endpoint invokes the authenticated API using the Foundry project
+managed identity, which has `SkillLoom.User`. The API therefore sees that
+shared identity, not the signed-in Copilot user. Chain writes still require
+the API's conditional revision header; do not retry an unconditional or stale
+write.
 
 ## Copilot CLI Direct-API Local MCP
 
@@ -220,23 +224,25 @@ Prompt instructions are not an authorization boundary. Restrict each agent to
 the tools it needs, require confirmation for writes or external side effects,
 and rely on API role checks and conditional writes. The Foundry smoke agents
 are limited to their configured tool allowlists; hosted chain execution
-remains deferred until the owner reauthorizes P5 and P5-G passes.
+remains deferred until the owner reauthorizes the hosted runner and its exit
+gate (P5, P5-G) passes.
 
 ## Main Workflows
 
-The deployed API implements these workflows for approved callers. P4-G
-passed: Foundry and Copilot clients completed list/get/save/export (E-128,
-E-161). A live skill search through the local adapter returned an empty
-catalog; a successful skill-detail read could not be exercised because there
-were no entries. Local repository copying was not run.
+The deployed API implements these workflows for approved callers. The
+Foundry/Copilot integration live validation (P4-G) passed: Foundry and
+Copilot clients completed list/get/save/export (E-128, E-161). A live skill
+search through the local adapter returned an empty catalog; a successful
+skill-detail read could not be exercised because there were no entries. Local
+repository copying was not run.
 
 - **List and read chains:** `GET /v1/chains` and
   `GET /v1/chains/{chainId}`.
 - **Create or update a chain:** `PUT /v1/chains/{chainId}` with conditional
   revision headers. Writes without the correct precondition are rejected.
-- **Export a chain bundle:** `GET /v1/chains/{chainId}/bundle`. P4-G
-  completed a live export containing the chain and its reviewed skill
-  snapshots.
+- **Export a chain bundle:** `GET /v1/chains/{chainId}/bundle`. The
+  integration live validation completed a live export containing the chain
+  and its reviewed skill snapshots.
 - **Search or inspect skills:** `GET /v1/skills` and
   `GET /v1/skills/{skillName}`. Search returns metadata; detail reads return
   reviewed file content.
@@ -311,9 +317,10 @@ a vulnerability. See
 - **No endpoint or sign-in page:** The service URL is supplied by its
   operator, not published in this repository. There is no web sign-in page.
 - **Foundry direct-API invocation fails:** The validated Foundry path is the
-  Toolbox, which completed P4-G list/get/save/export. The separate direct-API
-  MCP agent still returns errors for some operations. Ask the operator which
-  path is configured before retrying.
+  Toolbox, which completed the integration live validation's
+  list/get/save/export checks. The separate direct-API MCP agent still returns
+  errors for some operations. Ask the operator which path is configured
+  before retrying.
 - **Copilot CLI reports an OAuth metadata error:** Copilot CLI 1.0.114 accepts
   the sample configuration but fails discovery before sign-in. No supported
   workaround has been validated; do not paste or persist an access token.

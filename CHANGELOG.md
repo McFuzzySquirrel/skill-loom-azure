@@ -28,7 +28,7 @@ published release or release tag; everything below is under `Unreleased`.
 - Non-root production container image, Docker/Azurite local profile, and
   bounded request, header, body, response, query, page, and cursor limits.
 - Standalone `azd`/Bicep deployment for a fresh Azure resource group and the
-  legacy P2 templates plus optional Foundry landing zone.
+  legacy storage foundation templates plus optional Foundry landing zone.
 - User guide, administrator guide, deployment and demo guides, release notes,
   scoped architecture decisions, storage recovery runbook, and OpenAPI v1
   contract.
@@ -56,4 +56,5 @@ published release or release tag; everything below is under `Unreleased`.
 - Keep catalog additions administrator-managed and reviewed; do not pull
   skills from remote repositories.
 - Treat chains, skills, bundles, and tool output as untrusted input.
-- Keep hosted chain execution disabled until the P5 exit gate passes.
+- Keep hosted chain execution disabled until the hosted runner exit gate
+  passes.
