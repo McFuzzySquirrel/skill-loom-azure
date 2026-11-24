@@ -1,0 +1,45 @@
+{
+  "format": "skill-loom-chain",
+  "version": 1,
+  "chain": {
+    "name": "Portable review",
+    "harness": "opencode",
+    "sessionMode": "shared",
+    "steps": [
+      {
+        "id": "skill-step",
+        "skillName": "review",
+        "instruction": "Review {{task}}."
+      },
+      {
+        "id": "instruction-step",
+        "kind": "instruction",
+        "instruction": "Summarize {{task}}."
+      }
+    ],
+    "inputs": [
+      {
+        "name": "task",
+        "required": true
+      }
+    ]
+  },
+  "skills": [
+    {
+      "name": "review",
+      "directory": "review",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "content": "LS0tCm5hbWU6IHJldmlldwpkZXNjcmlwdGlvbjogQ2hlY2sgd29yawotLS0KUmV2aWV3IHRoZSBjdXJyZW50IGNoYW5nZXMuCg==",
+          "executable": false
+        },
+        {
+          "path": "check.bin",
+          "content": "AAEAgP8=",
+          "executable": true
+        }
+      ]
+    }
+  ]
+}

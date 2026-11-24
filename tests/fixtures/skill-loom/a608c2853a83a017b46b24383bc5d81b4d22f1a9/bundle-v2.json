@@ -1,0 +1,63 @@
+{
+  "format": "skill-loom-chain",
+  "version": 2,
+  "chain": {
+    "name": "Portable review",
+    "harness": "opencode",
+    "sessionMode": "shared",
+    "steps": [
+      {
+        "id": "skill-step",
+        "skillName": "review",
+        "instruction": "Review {{task}}."
+      },
+      {
+        "id": "instruction-step",
+        "kind": "instruction",
+        "instruction": "Summarize {{task}}."
+      }
+    ],
+    "inputs": [
+      {
+        "name": "task",
+        "required": true
+      }
+    ],
+    "agent": {
+      "harness": "opencode",
+      "name": "reviewer",
+      "sourceId": "source",
+      "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "repositoryPath": ".opencode/agents/reviewer.md",
+      "agentPath": "reviewer.md",
+      "fingerprint": "5b4034bcaac3c247aac80a5d2da332f21bf40268acb07fc6c860129c4759fb12"
+    }
+  },
+  "skills": [
+    {
+      "name": "review",
+      "directory": "review",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "content": "LS0tCm5hbWU6IHJldmlldwpkZXNjcmlwdGlvbjogQ2hlY2sgd29yawotLS0KUmV2aWV3IHRoZSBjdXJyZW50IGNoYW5nZXMuCg==",
+          "executable": false
+        },
+        {
+          "path": "check.bin",
+          "content": "AAEAgP8=",
+          "executable": true
+        }
+      ]
+    }
+  ],
+  "agents": [
+    {
+      "name": "reviewer",
+      "harness": "opencode",
+      "agentPath": "reviewer.md",
+      "fingerprint": "5b4034bcaac3c247aac80a5d2da332f21bf40268acb07fc6c860129c4759fb12",
+      "content": "LS0tCm5hbWU6IHJldmlld2VyCmRlc2NyaXB0aW9uOiBSZXZpZXcgY2hhbmdlcwotLS0KUmV2aWV3IHRoZSB0YXNrLgo="
+    }
+  ]
+}

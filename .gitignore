@@ -1,0 +1,21 @@
+/.docs_index.sqlite
+.azure/
+.archify/
+.codegraph/
+.mcp.json
+infra/p2/main.json
+infra/p2/api.json
+docs/articles/images/the-p2a-foundry-setup.png
+# Keep the P3 screenshot local until its OCR-detected tenant label is reviewed.
+docs/articles/images/p3---deployed-authenticated-api.png
+scripts/md_index.py
+scripts/md_mcp_server.py
+node_modules/
+.venv/
+coverage/
+dist/
+*.tsbuildinfo
+.env*
+!.env.example
+__pycache__/
+*.py[cod]

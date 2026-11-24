@@ -1,0 +1,9 @@
+{
+  // Evidence and decision tables are intentionally kept as single-line rows.
+  "config": {
+    "MD013": {
+      "line_length": 80,
+      "tables": false
+    }
+  }
+}

@@ -1,0 +1,27 @@
+name: skill-loom-foundry
+
+infra:
+  provider: bicep
+  path: infra
+  module: main
+
+services:
+  api:
+    project: .
+    language: docker
+    host: containerapp
+    docker:
+      path: ./Dockerfile
+      context: .
+      remoteBuild: true
+
+hooks:
+  postdeploy:
+    posix:
+      shell: sh
+      run: node scripts/enable-azure-ingress.mjs
+      interactive: true
+    windows:
+      shell: pwsh
+      run: node scripts/enable-azure-ingress.mjs
+      interactive: true

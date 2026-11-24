@@ -1,0 +1,37 @@
+{
+  "version": 3,
+  "id": "example-change-review",
+  "name": "Review a change",
+  "harness": "copilot",
+  "sessionMode": "fresh",
+  "steps": [
+    {
+      "id": "inspect-change",
+      "kind": "instruction",
+      "instruction": "Review {{change}} for {{riskFocus}}. Give each finding an exact location and evidence; do not modify files.",
+      "label": "Review the change"
+    },
+    {
+      "id": "summarize-risk",
+      "kind": "instruction",
+      "instruction": "Summarize material risks and validation gaps. Do not approve or alter the change.",
+      "label": "Summarize"
+    }
+  ],
+  "inputs": [
+    {
+      "name": "change",
+      "label": "Change or diff",
+      "required": true
+    },
+    {
+      "name": "riskFocus",
+      "label": "Risk focus",
+      "required": false,
+      "defaultValue": "correctness, security, and data integrity"
+    }
+  ],
+  "automaticPermissionOptIn": false,
+  "createdAt": "2026-11-22T20:47:46.138Z",
+  "updatedAt": "2026-11-22T20:47:46.138Z"
+}

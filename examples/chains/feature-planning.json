@@ -1,0 +1,37 @@
+{
+  "version": 3,
+  "id": "example-feature-planning",
+  "name": "Plan a feature",
+  "harness": "copilot",
+  "sessionMode": "fresh",
+  "steps": [
+    {
+      "id": "clarify-goal",
+      "kind": "instruction",
+      "instruction": "Restate the goal, constraints, and acceptance criteria for {{task}}. Apply these additional constraints: {{constraints}}. Ask questions when critical details are missing; do not modify files.",
+      "label": "Clarify the goal"
+    },
+    {
+      "id": "propose-plan",
+      "kind": "instruction",
+      "instruction": "Propose a minimal implementation plan for {{task}}. Identify likely files, validation commands, and risks. Do not execute the plan.",
+      "label": "Propose a plan"
+    }
+  ],
+  "inputs": [
+    {
+      "name": "task",
+      "label": "Feature request",
+      "required": true
+    },
+    {
+      "name": "constraints",
+      "label": "Constraints",
+      "required": false,
+      "defaultValue": "Follow the repository's existing conventions."
+    }
+  ],
+  "automaticPermissionOptIn": false,
+  "createdAt": "2026-11-22T20:47:46.138Z",
+  "updatedAt": "2026-11-22T20:47:46.138Z"
+}

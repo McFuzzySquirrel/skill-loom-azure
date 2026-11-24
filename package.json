@@ -1,0 +1,39 @@
+{
+  "name": "skill-loom-foundry",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "build": "tsc --noEmit false --outDir dist",
+    "start": "node dist/main.js",
+    "dev:setup": "node scripts/setup-local-dev.mjs",
+    "dev:up": "docker compose --env-file .env.local up --build",
+    "dev:down": "docker compose --env-file .env.local down",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test",
+    "docs:check": "markdownlint-cli2 \"README.md\" \"CHANGELOG.md\" \"SECURITY.md\" \"docs/adr/**/*.md\" \"docs/schemas/**/*.md\"",
+    "check": "npm run lint && npm run typecheck && npm test && npm run docs:check"
+  },
+  "overrides": {
+    "katex": "0.18.10"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.10.1",
+    "eslint": "^10.15.0",
+    "markdownlint-cli2": "^0.24.1",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.48.1"
+  },
+  "dependencies": {
+    "@azure/identity": "^4.14.1",
+    "@azure/storage-blob": "^12.34.0",
+    "jose": "^6.2.18",
+    "zod": "^4.6.7"
+  }
+}

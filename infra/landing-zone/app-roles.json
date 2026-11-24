@@ -1,0 +1,24 @@
+[
+  {
+    "allowedMemberTypes": [
+      "User",
+      "Application"
+    ],
+    "displayName": "Skill Loom User",
+    "id": "1717ec1b-74de-4377-99c0-eb1b65fa4a74",
+    "isEnabled": true,
+    "description": "Allows normal Skill Loom Foundry API and MCP operations.",
+    "value": "SkillLoom.User"
+  },
+  {
+    "allowedMemberTypes": [
+      "User",
+      "Application"
+    ],
+    "displayName": "Skill Loom Admin",
+    "id": "2e210d52-3949-4acb-8567-22682fd9854d",
+    "isEnabled": true,
+    "description": "Allows normal Skill Loom Foundry API and MCP operations, including reviewed catalog additions.",
+    "value": "SkillLoom.Admin"
+  }
+]

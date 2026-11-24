@@ -1,0 +1,36 @@
+{
+  "version": 3,
+  "id": "chain-abc123",
+  "name": "Ship the feature",
+  "harness": "opencode",
+  "sessionMode": "shared",
+  "steps": [
+    {
+      "id": "step-1",
+      "skillName": "brainstorm",
+      "instruction": "Plan the task {{task}}.",
+      "label": "Plan"
+    },
+    {
+      "id": "step-2",
+      "skillName": "implement",
+      "instruction": "Implement the plan for {{task}}."
+    }
+  ],
+  "inputs": [
+    {
+      "name": "task",
+      "label": "Task",
+      "required": true
+    },
+    {
+      "name": "audience",
+      "label": "Audience",
+      "required": false,
+      "defaultValue": "maintainers"
+    }
+  ],
+  "automaticPermissionOptIn": false,
+  "createdAt": "2026-11-04T12:00:00.000Z",
+  "updatedAt": "2026-11-04T12:30:00.000Z"
+}

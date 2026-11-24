@@ -1,0 +1,46 @@
+services:
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite:3.38.0
+    command:
+      - azurite-blob
+      - --blobHost
+      - 0.0.0.0
+      - --location
+      - /data
+    environment:
+      AZURITE_ACCOUNTS: "skillloomdev:${AZURITE_ACCOUNT_KEY:?Run npm run dev:setup and set the local key}"
+    ports:
+      - "127.0.0.1:10000:10000"
+    volumes:
+      - azurite-data:/data
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "require('net').connect(10000).end()"
+      interval: 2s
+      timeout: 2s
+      retries: 20
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      azurite:
+        condition: service_healthy
+    environment:
+      BLOB_STORAGE_MODE: azurite
+      AZURITE_BLOB_ENDPOINT: http://azurite:10000/skillloomdev
+      AZURITE_ACCOUNT_NAME: skillloomdev
+      AZURITE_ACCOUNT_KEY: ${AZURITE_ACCOUNT_KEY:?Run npm run dev:setup and set the local key}
+      ENTRA_TENANT_ID: ${ENTRA_TENANT_ID:?Set ENTRA_TENANT_ID in .env.local}
+      ENTRA_AUDIENCE: ${ENTRA_AUDIENCE:?Set ENTRA_AUDIENCE in .env.local}
+      ENTRA_TOKEN_VERSION: ${ENTRA_TOKEN_VERSION:-2.0}
+      PORT: "3000"
+    ports:
+      - "127.0.0.1:3000:3000"
+
+volumes:
+  azurite-data:

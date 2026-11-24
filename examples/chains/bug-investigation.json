@@ -1,0 +1,36 @@
+{
+  "version": 3,
+  "id": "example-bug-investigation",
+  "name": "Investigate a bug",
+  "harness": "copilot",
+  "sessionMode": "fresh",
+  "steps": [
+    {
+      "id": "collect-evidence",
+      "kind": "instruction",
+      "instruction": "Reproduce {{symptom}} using {{reproduction}}. Record observed output and relevant context; do not change code.",
+      "label": "Collect evidence"
+    },
+    {
+      "id": "diagnose",
+      "kind": "instruction",
+      "instruction": "Compare plausible causes against the evidence. Recommend one minimal next check and a safe fix; do not modify files.",
+      "label": "Diagnose"
+    }
+  ],
+  "inputs": [
+    {
+      "name": "symptom",
+      "label": "Observed symptom",
+      "required": true
+    },
+    {
+      "name": "reproduction",
+      "label": "Reproduction steps",
+      "required": true
+    }
+  ],
+  "automaticPermissionOptIn": false,
+  "createdAt": "2026-11-22T20:47:46.138Z",
+  "updatedAt": "2026-11-22T20:47:46.138Z"
+}
