@@ -168,5 +168,4 @@ policy is manual backup/restore; preserve data before cleanup and follow the
 - The commands in this guide are not deployment approval. `azd up` provisions
   Azure resources; obtain resource-owner approval after reviewing
   `azd provision --preview` before running it.
-- P5 hosted execution and P6 production hardening/pilot checks remain
-  post-POC.
+- Hosted execution and production hardening/pilot checks remain post-POC.

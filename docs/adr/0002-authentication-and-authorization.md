@@ -10,9 +10,10 @@ status: Accepted
 # ADR-0002: Entra authentication and app-role authorization
 
 - **Deciders:** Project owner (@McFuzzySquirrel)
-- **Date:** 2026-11-21
+- **Date:** 2026-11-24
 
-**Technical Story:** Implementation plan D-9 and P3-C2.
+**Technical Story:** The Entra app-role decision (D-9) and the token
+verification and role-policy work (P3-C2).
 
 ## Agent Rules
 
@@ -65,10 +66,11 @@ authorization. Configuration explicitly supplies `tenantId`, `audience`, and
 
 ### Negative Consequences
 
-- A remote JWKS and live Entra negative-case check are still required before
-  the P3 exit gate.
-- The API request handlers are not implemented, so this helper is not yet a
-  deployed enforcement boundary.
+- A live or remote JWKS failure-case check remains pending; the authenticated
+  API live validation (P3-G) covered wrong-audience rejection, positive v2
+  authentication, and live RBAC.
+- MCP caller identity is mediated by the configured client or Foundry Toolbox;
+  the API still authorizes the identity that reaches it.
 
 ## Pros and Cons of the Options
 

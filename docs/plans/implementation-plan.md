@@ -1,168 +1,25 @@
 # Azure-hosted Skill Loom (`skill-loom-foundry`): implementation plan
 
-**Current status:** The POC's P0/P1, P2A-G, P2-G, P3-G, and P4-G gates have
-passed (P4-G: E-128 and E-161). The POC implementation exposes
-Entra-protected chain and reviewed-skill discovery, chain transfer, and
-Admin-managed catalog changes.
-P4-C10 positive live skill-detail retrieval remains pending because the live
-catalog was empty; live Azure lease behavior remains `not run`. P5 is deferred
-and P6 is not started. Both are post-POC adoption work; hosted execution stays
-disabled until P5-G passes. The former non-production POC deployment has
-been decommissioned after its stored chain data was backed up (E-184). A
-standalone adopter deployment and local Azurite profile are implemented; the
-new paths have not provisioned Azure resources.
-Static and local verification passed, but no live Azure deployment or
-authenticated local API request was performed. The current public-candidate
-scan and isolated rewritten-history scan each report only the known Azure
-Key Vault built-in role-definition GUID false positive. Targeted historical
-documentation checks found no owner-specific amounts, expiry details, concrete
-tenant/subscription identifiers, or generated resource names in the audited
-files; generic tenant terminology remains. The three sanitized branch heads
-have been pushed, but GitHub's read-only merged pull-request refs #2 and #3
-still retain older history with owner-specific budget/expiry details and Azure
-resource names. The owner selected a new public snapshot repository,
-`McFuzzySquirrel/skill-loom-azure`, with a fresh root commit and no imported
-history or PR refs. The new repository has been created privately for final
-snapshot verification. Its audited fresh-root snapshot is public, with the
-remote default branch and refs verified. The original repository remains
-private because its merged PR refs retain older history.
+**Current status:** P0–P4 gates passed (P4-G: E-128, E-161). The POC
+exposes Entra-protected chain and reviewed-skill discovery, chain
+transfer, and Admin-managed catalog changes. P4-C10 positive live
+skill-detail retrieval remains pending because the live catalog was empty;
+live Azure Blob lease behavior remains `not run`. P5 is deferred and P6 is
+not started; hosted execution remains disabled. A standalone adopter
+deployment and local Azurite profile are implemented, but no Azure
+resources were provisioned for those paths. The audited snapshot is public
+as `McFuzzySquirrel/skill-loom-azure`; the original
+`McFuzzySquirrel/skill-loom-foundry` repository remains private. The POC is
+not production-ready. Its former owner deployment has been decommissioned
+after its stored chain data was backed up (E-187). Evidence is in section 9;
+adopter status is in section 11.
 
-**Status details:** Execution underway (P0/P1 complete; P2A-C1, C4-C7, and C8-C11
-passed; P2A-G and P2-G passed; P3-C1 passed with local contract tests;
-P3-C2 passed local operation-policy tests; P3-C3 passed local Blob-adapter
-tests; P3-C4 passed local skill-catalog tests; P3-C5 passed local API tests;
-P3-C6 implementation, P2 foundation/API deployments, and live probe/auth
-rejection checks passed (E-059 to E-065). The first API deployment failed on an
-ARM64 image and was corrected. In P3-G, unauthenticated and wrong-audience
-requests returned 401; the initial v1 test-client token was not sent
-(E-066–E-068). The approved v2 configuration was validated and deployed.
-Positive authentication, live RBAC, Blob create/read, stale-revision,
-traversal, and oversize checks passed (E-069–E-074). Per owner decision, one
-unique test record remains in Blob Storage. C2 has an accepted
-PoC-only exception; C3 offer and budget are recorded but the upgrade decision
-remains open). The Basic
-landing zone was deployed, torn down after P2A-G
-passed, and re-provisioned for P2 validation. The subscription budget and
-tenant-scoped API registration remain.
-The normal caller has a verified Foundry User assignment at project scope, and
-the current Foundry project identity has `SkillLoom.User`. The disposable Blob
-test account was deleted after its live spike. Break-glass accounts are not
-configured; production use remains out of scope until the gap is resolved.
-The 32 MiB application-level serialized-object cap is enforced by document
-schemas; P2-C2/C3 decisions are recorded, and the temporary Bicep foundation
-was deployed, restore-tested, and torn down (E-050–E-053). P2-C4 live results
-support Blob, and the owner selected Azure Blob Storage as the final PoC
-backend (E-047). The
-decision and supporting evidence are in
-[`p2-c4-storage-backend-research.md`](p2-c4-storage-backend-research.md).
-The owner authorized and approved the temporary P2-G deployment plan.
-Validation passed (E-050); detailed what-if proposes 10 P2 resources and
-ignores the five existing P2A resources. Deployment and the disposable Blob
-restore passed (E-051). Scoped teardown initially stalled because the
-Container Apps environment remained `ScheduledForDelete`; a follow-up ARM
-delete completed teardown (E-053). Final inventory contains only P2A
-resources, and the budget and API registration remain intact.
-P4-C4 has a registered Toolbox, project-managed-identity connection, and
-read-only Toolbox smoke agent, but its invocation and chain list/fetch remain
-unverified. Direct OpenAPI agent version 6 has only list/get tools. Its API
-audit logs show `listChains` succeeded twice as `SkillLoom.User`, while
-`getChain` was not logged and a get-only probe returned `tool_user_error`.
-Foundry User is assigned to its runtime identity at project scope; the MCP
-helper still returns 404, and a get-only parameter-placement probe returned
-`invalid_payload` without a chain API event (E-094–E-097). The active
-prompt agent has a stable endpoint, but its metadata GET succeeds while a POST
-to the documented Responses endpoint returns 404
-`Subdomain does not map to a resource` (E-089). The Copilot CLI configuration
-sample is documented, but the CLI reports `needs-auth`; Copilot CLI 1.0.114
-reproduces a pre-sign-in OAuth metadata discovery failure. The Toolbox
-challenge omits `resource_metadata`, and its Protected Resource Metadata
-endpoints return 404 (E-085, E-087–E-088). The owner approved a reversible
-direct-API spike: Foundry OpenAPI tools and a local Copilot CLI stdio adapter
-will bypass the Foundry Toolbox (E-090). The adapter passes mocked protocol
-and API checks, but the current Azure CLI identity cannot acquire an API token;
-no live Copilot chain operation has run. The project-managed-identity
-OpenAPI connection is registered, and direct agent version 6 is active. Its
-list operation succeeded twice, but get/fetch still fails before an API audit
-event; MCP invocation returned 404 (E-091–E-097). The owner-approved Foundry
-User assignment is confirmed at project scope (E-094). The owner selected a
-dedicated single-tenant public client using device-code authentication, with
-no client secret. The MSAL adapter passes focused local tests, but live
-sign-in now reaches Entra and returns AADSTS530035 (`BlockedBySecurityDefaults`).
-Microsoft documents that Security Defaults blocks device-code flow. No token,
-API request, or chain result is confirmed. The `SkillLoom.Access` delegated
-scope is applied; the
-single-tenant public client and its admin consent are configured and read
-back. A previously configured caller's `SkillLoom.User` assignment is also
-read back, but its match to the identity used in this attempt is unverified.
-The workspace MCP configuration is recognized by Copilot CLI, and a local
-initialize/tools-list handshake advertises four User-scoped tools. Live
-`list_chains` returned `MCP transport closed before the tool responded`; no
-live API result is confirmed. Interactive `/mcp list` and `/mcp get` now report
-the server failed with `MCP connection closed unexpectedly`, with tools
-unavailable. The owner reloaded all MCP servers and Copilot reported six
-connected, but a subsequent `list_chains` call still closed its transport
-before responding. The owner reports no device-code prompt was shown
-(E-098–E-111), and the server still reported connected after the failed call
-(E-112); the cause remains unknown. Owner-approved temporary request/auth/API
-diagnostic markers are in the local adapter; six focused tests and compilation
-pass. In the owner's follow-up, no markers or device prompt were observed and
-the server remained connected; the list call then reported `MCP error -32001:
-Request timed out` on both attempts, including `limit: 10` (E-113–E-118).
-The provided client trace shows a 180-second invoke-stage timeout and
-cancellation cleanup (E-119). The local debug archive confirms two invoke
-timeouts, but its process log contains no adapter markers (E-120).
-The owner initially selected a nonblocking, two-step device-code flow that
-preserved the dedicated public client and in-memory token cache (E-121). It
-was implemented to return instructions promptly while MSAL polled in a
-background thread (E-122). The live attempt returned AADSTS530035
-(`BlockedBySecurityDefaults`), which Microsoft identifies as Security Defaults
-blocking device-code flow (E-124). No token, API response, or chain list is
-confirmed at that stage. The owner approved switching to interactive browser
-authentication with PKCE. The adapter now uses that flow, and the public
-client's `http://localhost` redirect was registered and read back. In a
-separate session, the owner subsequently reports `list_chains(limit=10)`
-returned one chain (E-126). This was one live list result. The current session
-verified Copilot-side list, save, get, and export through the available
-`skillloom-api` MCP (E-128); the local stdio adapter and Foundry invocation
-remain open. Temporary debug markers have been removed.
-A subsequent live list attempt after browser sign-in timed out; a targeted get
-returned `example-feature-planning` at revision 1. The enabled full-smoke
-Foundry agent's version 2 invocation returned HTTP 400 `tool_user_error`.
-No Foundry save/export result is confirmed (E-140).
-Follow-up API audit showed the Foundry run completed list/get, then save failed
-with HTTP 400 `invalid_request`; no export request was recorded. A later get
-confirmed the tested chain remains at revision 1 (E-141).
-The owner-approved version 3 smoke agent also completed list/get, but its save
-failed with HTTP 422 `invalid_document`; no export request was recorded. Its
-tool call included `If-Match: "\"1\""` and an empty `If-None-Match` value.
-A subsequent get confirmed the tested chain remains at revision 1 (E-142).
-The separate Portal storage denial is for
-the owner's user identity and does not establish an API managed-identity
-failure (E-116).
-On 23 November, the Toolbox returned a precise managed-identity configuration
-error. Toolbox version 2 uses an OpenAPI project connection and inline
-operation parameters; direct Toolbox health/list/fetch and Copilot list/fetch
-now pass. A streamed Foundry response completed listing but then hit the
-model rate limit (E-137). With renewed owner approval, capacity was temporarily
-raised to 10; the Foundry agent completed list/fetch and the overall response.
-Capacity 1 and the original deployment settings were restored and verified
-(E-138). The owner subsequently approved keeping capacity at 10; the live
-deployment and unchanged model/policies were verified (E-139). P4-C4 is
-complete.
-Three generic instruction-only chain examples are now in `examples/chains/`
-and pass the v3 schema tests. The available `skillloom-api` MCP completed live
-list, create, get, and export operations and persisted all three owner-approved
-examples (E-128). A later local stdio adapter retry completed interactive auth
-and returned a live list result (E-134). The Foundry v4 smoke later completed
-list/get/save/export; all four API audit operations returned HTTP 200, and a
-post-save read confirmed revision 2 (E-161). Together with the Copilot-side
-operations in E-128, this passes P4-G. Unauthorized-identity denial remains
-`not run`, as permitted by the exit gate. P4-C6/C7 untrusted-output and client
-documentation are complete to their documentation-only boundaries (E-083–E-084).
-Moved here from `skill-loom` PR #35. The target repository was created empty
-by the owner after tool-based creation failed with `403`. See
-[Execution evidence](#9-execution-evidence-register) entries E-001 and E-002.
-Q-1 to Q-9 are answered or explicitly deferred (section 1.2).
+**Status details:** P0/P1 complete. P2A-G, P2-G, P3-G, and P4-G passed.
+Implementation is complete through P3-C6 and P4-C1–C9/C11, except P4-C10.
+The 32 MiB serialized-object cap is enforced, Azure Blob is the only
+persistence backend, and the reviewed catalog is Admin-managed. P5/P6 are
+post-POC. Dated evidence is in section 9; the phase checklist is in
+section 4.
 
 **Purpose:** Plan a separate project that hosts Skill Loom chains on Azure so
 Foundry agents and Copilot CLI/SDK agents can build, pull, and run chains
@@ -1067,7 +924,10 @@ Add one row per executed gate or notable event. Do not edit past rows; append co
 | E-181 | 2026-11-24 | AR-5 / publish the audited fresh snapshot | Change only the selected snapshot repository's visibility and verify its remote state | Public visibility confirmed; original repository remains private | Owner's public-repository decision; GitHub CLI `gh repo edit`, `gh repo view`, `gh pr list`; `git ls-remote`; project-execution-journal skill | `McFuzzySquirrel/skill-loom-azure` is `PUBLIC`, with `main` as default branch. At the visibility check, remote `main` matched `0449ec0`, refs contained only `refs/heads/main`, and no PRs existed. `McFuzzySquirrel/skill-loom-foundry` remains `PRIVATE`; no Azure resources were provisioned and live Azure checks were not run. |
 | E-182 | 2026-11-24 | AR-4 / create an end-to-end adopter demo script | Document a safe local walkthrough for reviewed-skill administration, authenticated discovery, and chain export | Demo guide and sample data added locally; publication to the public snapshot not performed | CodeGraph, `rg`, `view`, `apply_patch`, `npm run docs:check`, Markdown lint, TypeScript chain-schema validation; project-execution-journal skill | Added `docs/demo-script.md`, a harmless reviewed-skill fixture, and a version-3 chain example referencing it. The script requires explicit approval for persistent writes, uses a disposable local Azurite store, and clearly states that hosted execution is unavailable. Static/documentation checks do not prove live Entra, MCP, or Azure behavior; no live service was called and no Azure resources were provisioned. |
 | E-183 | 2026-11-24 | AR-4 / add the demo walkthrough to the public snapshot | Publish the guide, sample skill, sample chain, and README link to `skill-loom-azure` | Public sync and remote verification passed; content/history scans found only the known false positive | Owner request; Git commit `5f2b949`; `npm run docs:check`; `markdownlint-cli2`; TypeScript chain-schema validation; local-link check; Gitleaks 8.30.1 tree/history scans; GitHub CLI; `git ls-remote`; project-execution-journal skill | Commit `5f2b949` added the demo script and examples to the public repository. At verification, `main` matched that commit, was the only remote ref, and the repository had no tags or PRs; the published tree had 110 files. Gitleaks found only the known built-in Key Vault role-definition GUID false positive in both tree and history scans. No live Entra/MCP/Azure operation was run and no Azure resources were provisioned. |
-| E-184 | 2026-11-24 | Cross-phase / decommission the non-production POC | Export the stored data, then remove the explicitly selected Azure resource group | Resource group deletion completed and absence verified; encrypted chain backup verified; temporary data access removed | Owner approval via `ask_user`; `azure-resource-lookup`; Azure MCP subscription/resource/container inventory; Azure CLI (`az`); Python; `systemd-creds`; `sha256sum`; project-execution-journal skill | The only resource group in the active subscription contained the POC API/Container Apps, storage, and optional Foundry resources. A temporary `Storage Blob Data Reader` assignment at the `documents` container scope enabled export after RBAC propagation; it was removed after backup verification. The container held four chain JSON blobs and no catalog blob. All four were archived with a manifest and checksums, encrypted with the local user's systemd host key, decrypted for round-trip and content verification, and stored outside the repository with mode `0600`. Azure accepted deletion of the selected resource group; the Container Apps environment remained scheduled for deletion during polling, then the group disappeared. `az group exists` returned false and the group list contained no match. The Azure Entra app registration was not in the group and was not changed. |
+| E-184 | 2026-11-24 | AR-4 / documentation refresh | Refresh the README, release notes, guides, and ADR set; distinguish prior live POC evidence from the unverified adopter path | Documentation and local checks passed; no new live checks run | `create-project-documentation` and `pr` skills; `npm ci`; `npm run check` (56 tests, 17 Markdown files); `az bicep build` for `infra/main.bicep` and `infra/p2/main.bicep`; `markdownlint-cli2` on refreshed docs; local Markdown link scan (29 files); `git diff --check` | Rebuilt the README with the required section set, replaced the stale changelog and release notes, corrected user/admin guide statements, added ADR-0012 for the standalone adopter deployment, and added the `AGENTS.md` documentation-maintenance section. The docs now state that the original POC was exercised in a live Azure environment (P3-G and P4-G) while the standalone adopter deployment, live lease behavior, authenticated local calls, and positive live skill-detail retrieval remain unverified or pending. No Azure resource or live operation was changed. |
+| E-185 | 2026-11-24 | AR-4 / documentation readability | Replace phase and evidence codes in the article and non-plan documents with descriptive titles | Documentation checks passed; live checks not run | `create-project-documentation` skill; `npm run check` (56 tests, 17 Markdown files); `markdownlint-cli2` across 25 documents; `az bicep build` for `infra/p2/main.bicep` and `infra/p2/api.bicep`; local Markdown link scan (32 files); `git diff --check` | Replaced codes with titles in README, release notes, guides, ADRs, runbooks, infrastructure READMEs, and the article. The article now has a plan-reference line at the start of each dated entry and descriptive prose; high-level documents use title plus code on first mention; phase headings and Quick highlights keep number plus title. No Azure resource or live operation was changed. |
+| E-186 | 2026-11-24 | AR-4 / project-name refresh | Replace the previous display name with Skill Loom Azure in non-plan documents and metadata text | Documentation checks passed; stable identifiers retained; live checks not run | `create-project-documentation` skill; `npm run check` (56 tests, 17 Markdown files); `markdownlint-cli2` across 28 documents; local Markdown link scan (32 files); `git diff --check` | Updated the display name in the README, release notes, guides, demo script, article, OpenAPI title, security policy, landing-zone metadata, and local adapter description. Kept the package name, azd project name, ACR image path, Entra app registration names, old repository links, and image filenames unchanged for deployment and historical compatibility. No Azure resource or live operation was changed. |
+| E-187 | 2026-11-24 | Cross-phase / decommission the non-production POC | Export the stored data, then remove the explicitly selected Azure resource group | Resource group deletion completed and absence verified; encrypted chain backup verified; temporary data access removed | Owner approval via `ask_user`; `azure-resource-lookup`; Azure MCP subscription/resource/container inventory; Azure CLI (`az`); Python; `systemd-creds`; `sha256sum`; project-execution-journal skill | The only resource group in the active subscription contained the POC API/Container Apps, storage, and optional Foundry resources. A temporary `Storage Blob Data Reader` assignment at the `documents` container scope enabled export after RBAC propagation; it was removed after backup verification. The container held four chain JSON blobs and no catalog blob. All four were archived with a manifest and checksums, encrypted with the local user's systemd host key, decrypted for round-trip and content verification, and stored outside the repository with mode `0600`. Azure accepted deletion of the selected resource group; the Container Apps environment remained scheduled for deletion during polling, then the group disappeared. `az group exists` returned false and the group list contained no match. The Azure Entra app registration was not in the group and was not changed. |
 
 ## 10. Traceability
 

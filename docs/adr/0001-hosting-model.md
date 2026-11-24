@@ -11,14 +11,17 @@ status: Accepted
 - **Deciders:** Project owner (@McFuzzySquirrel)
 - **Date:** 2026-11-21
 
-**Technical Story:** Implementation plan D-2 and P2 foundation design.
+**Technical Story:** The container-and-tool-layer decision (D-2) and the
+original storage foundation design (P2).
 
 ## Agent Rules
 
 - **MUST:** Keep the cloud service in a separate Azure hosting boundary.
 - **MUST NOT:** Treat a Container Apps environment as proof that an API app
-  or ingress is deployed; the P2 template creates neither.
-- **MUST NOT:** Enable hosted chain execution before the P5 exit gate.
+  or ingress is deployed; the legacy storage foundation template creates
+  neither.
+- **MUST NOT:** Enable hosted chain execution before the hosted runner exit
+  gate passes.
 
 ## Verify
 

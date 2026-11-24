@@ -3,23 +3,23 @@ targetScope = 'resourceGroup'
 @description('Name of the Container App for the API')
 param containerAppName string = 'ca-slf-api-${uniqueString(subscription().id, resourceGroup().id)}'
 
-@description('Resource ID of the approved P2 Container Apps environment')
+@description('Resource ID of the approved legacy storage foundation Container Apps environment')
 @minLength(1)
 param environmentResourceId string
 
-@description('Login server of the approved P2 Azure Container Registry')
+@description('Login server of the approved legacy storage foundation Azure Container Registry')
 @minLength(1)
 param registryServer string
 
-@description('Resource ID of the P2 user-assigned service identity')
+@description('Resource ID of the legacy storage foundation user-assigned service identity')
 @minLength(1)
 param serviceIdentityResourceId string
 
-@description('Client ID of the P2 user-assigned service identity')
+@description('Client ID of the legacy storage foundation user-assigned service identity')
 @minLength(1)
 param serviceIdentityClientId string
 
-@description('HTTPS Blob endpoint for the P2 Storage account')
+@description('HTTPS Blob endpoint for the legacy storage foundation Storage account')
 @minLength(1)
 param blobEndpoint string
 

@@ -12,7 +12,8 @@ status: Accepted
 - **Deciders:** Project owner (@McFuzzySquirrel)
 - **Date:** 2026-11-21
 
-**Technical Story:** Implementation plan P2-C3 and P2-C4.
+**Technical Story:** The public endpoint posture and storage backend
+decisions (P2-C3, P2-C4).
 
 ## Agent Rules
 
@@ -22,7 +23,8 @@ status: Accepted
   Storage shared-key access, and require HTTPS/TLS 1.2 or later.
 - **MUST NOT:** Treat public network access as the production security
   boundary or add private endpoints without a new decision.
-- **MUST:** Keep runner egress restrictions as a P5-C3 prerequisite.
+- **MUST:** Keep runner egress restrictions as a hosted runner prerequisite
+  (P5-C3).
 
 ## Verify
 
@@ -68,7 +70,8 @@ remains private.
 
 - Endpoints are publicly reachable and need application-level authentication.
 - This network posture is not a production boundary.
-- Runner egress controls remain deferred to P5-C3.
+- Runner egress controls remain deferred to the hosted runner isolation work
+  (P5-C3).
 
 ## Pros and Cons of the Options
 
@@ -87,5 +90,5 @@ remains private.
 - Related: [ADR-0002](0002-authentication-and-authorization.md) and
   [ADR-0007](0007-p2-foundation-infrastructure.md).
 - IaC: [`infra/p2/main.bicep`](../../infra/p2/main.bicep).
-- Historical decision: E-037 in the
+- Historical decision: the public endpoint evidence (E-037) in the
   [implementation plan](../plans/implementation-plan.md).

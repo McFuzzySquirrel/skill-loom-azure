@@ -34,3 +34,31 @@ For instruction files such as `AGENTS.md`, `SKILL.md`, and custom agent definiti
   labeling cross-phase rows. Use only recorded names, mark no use with `—`,
   and mark future phases `Not started`. The implementation plan remains the
   source of truth for phase status.
+
+<!-- BEGIN: documentation-maintenance -->
+## Documentation Maintenance
+
+Update the documentation in the same change as the behavior it describes, or
+state in the change why no update is needed.
+
+- `README.md` — keep the Getting Started commands runnable, the links
+  resolving, the feature list current, and all required sections present.
+  Link to the guides instead of repeating their content.
+- `CHANGELOG.md` — add an entry under `Unreleased` for every user-visible
+  change, using the existing headings instead of inventing categories.
+- `docs/releases/unreleased.md` — update the summary, known limitations, and
+  validation boundary when shipped behavior or evidence changes.
+- `docs/user-guide.md` — update workflows, visible states, client setup, and
+  recovery steps when user-facing behavior changes.
+- `docs/admin-guide.md` — update prerequisites, configuration, operations, and
+  troubleshooting when deployment or configuration changes.
+- `docs/adr/NNNN-kebab-title.md` — record a new decision when a durable
+  architectural choice changes, and supersede the old record instead of
+  rewriting it.
+- `docs/adr/README.md` — add or update the row for every record you add,
+  supersede, or re-date, in identifier order.
+- Before finishing work, run `npm run docs:check` and
+  `npx markdownlint-cli2 docs/user-guide.md docs/admin-guide.md
+  docs/releases/unreleased.md`, then confirm that commands, paths, and links
+  still resolve.
+<!-- END: documentation-maintenance -->

@@ -10,12 +10,13 @@ status: Accepted
 - **Deciders:** Project owner (@McFuzzySquirrel)
 - **Date:** 2026-11-21
 
-**Technical Story:** Implementation plan P2A-C1, P2A-C6, and P2A-G.
+**Technical Story:** The landing zone setup verification, Basic template
+provisioning, and exit gate (P2A-C1, P2A-C6, P2A-G).
 
 ## Agent Rules
 
-- **MUST:** Keep the P2A template based on the reviewed
-  `Azure-Samples/azd-ai-starter-basic` source pinned at
+- **MUST:** Keep the original Foundry landing zone template based on the
+  reviewed `Azure-Samples/azd-ai-starter-basic` source pinned at
   `5bf59a056c41ff37801dea334ba6a141e2dc5f67`.
 - **MUST NOT:** Enable hosted agents, capability host, ACR, Storage, or Search
   in this Basic landing-zone deployment.
@@ -37,9 +38,9 @@ status: Accepted
 
 ## Context and Problem Statement
 
-P2A needed a repeatable Foundry environment before P2 infrastructure work.
-Which baseline can be used without creating optional services or implying a
-production security posture?
+The original Foundry landing zone needed a repeatable environment before the
+storage foundation work. Which baseline can be used without creating optional
+services or implying a production security posture?
 
 ## Decision Drivers
 
@@ -55,11 +56,12 @@ production security posture?
 
 ## Decision Outcome
 
-Chosen option: "Use the pinned Basic template for the P2A landing zone,"
-because it supplies the required Foundry account and project while leaving
-optional hosted services disabled. Model, region, budget, identity, and
-break-glass evidence remain in the implementation plan and landing-zone
-runbook rather than being treated as part of this template decision.
+Chosen option: "Use the pinned Basic template for the original Foundry
+landing zone," because it supplies the required Foundry account and project
+while leaving optional hosted services disabled. Model, region, budget,
+identity, and break-glass evidence remain in the implementation plan and
+landing-zone runbook rather than being treated as part of this template
+decision.
 
 ### Positive Consequences
 
@@ -69,8 +71,8 @@ runbook rather than being treated as part of this template decision.
 
 ### Negative Consequences
 
-- The P2A configuration remains a proof of concept, including an accepted
-  break-glass exception.
+- The original Foundry landing zone configuration remains a proof of concept,
+  including an accepted break-glass exception.
 - Azure account, quota, and cost state must be rechecked before provisioning.
 
 ## Pros and Cons of the Options
@@ -90,5 +92,6 @@ runbook rather than being treated as part of this template decision.
 - Template and operator instructions:
   [`infra/landing-zone/README.md`](../../infra/landing-zone/README.md).
 - Related: [ADR-0008](0008-p2-public-network-posture.md).
-- Historical validation: E-016 through E-029 and E-042/E-043 in the
+- Historical validation: the landing zone evidence (E-016 through E-029 and
+  E-042/E-043) in the
   [implementation plan](../plans/implementation-plan.md).

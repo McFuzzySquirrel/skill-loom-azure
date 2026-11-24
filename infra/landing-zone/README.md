@@ -1,6 +1,6 @@
 # Optional Foundry integration
 
-Foundry is not required for the Skill Loom Foundry API or local development.
+Foundry is not required for the Skill Loom Azure API or local development.
 The core adopter deployment is documented in
 [`docs/deployment.md`](../../docs/deployment.md). It does not create Foundry
 resources.
@@ -33,6 +33,7 @@ Before adapting this sample:
    only if the Foundry agent will call the API. Do not assign `SkillLoom.Admin`
    to an agent unless a separately reviewed use case requires it.
 
-The existing Foundry integration has a narrow P4 proof-of-concept record in
-the [implementation plan](../../docs/plans/implementation-plan.md). P5 hosted
-execution remains disabled, and P6 hardening/pilot work is post-POC.
+The existing Foundry integration has a narrow Foundry/Copilot integration
+proof-of-concept record in the
+[implementation plan](../../docs/plans/implementation-plan.md). Hosted
+execution remains disabled, and hardening/pilot work is post-POC.

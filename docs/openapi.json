@@ -1,7 +1,7 @@
 {
   "openapi": "3.1.1",
   "info": {
-    "title": "Skill Loom Foundry API",
+    "title": "Skill Loom Azure API",
     "version": "1.0.0",
     "description": "Authenticated serve-mode API. Calling agents execute chain steps in their own sessions; this API does not run chains."
   },

@@ -5,19 +5,20 @@ applies_to:
 status: Accepted
 ---
 
-# ADR-0007: Bicep for the P2 foundation
+# ADR-0007: Bicep for the legacy storage foundation
 
 - **Deciders:** Project owner (@McFuzzySquirrel)
 - **Date:** 2026-11-21
 
-**Technical Story:** Implementation plan P2-C2 and P2-G.
+**Technical Story:** The storage foundation Bicep work and live validation
+(P2-C2, P2-G).
 
 ## Agent Rules
 
-- **MUST:** Define P2 foundation resources in Bicep and reuse the existing
-  P2A Log Analytics workspace.
-- **MUST NOT:** Deploy the P2 template without an approved plan and a reviewed
-  resource-group `what-if`.
+- **MUST:** Define legacy storage foundation resources in Bicep and reuse the
+  existing original Foundry landing zone's Log Analytics workspace.
+- **MUST NOT:** Deploy the legacy storage foundation template without an
+  approved plan and a reviewed resource-group `what-if`.
 - **MUST NOT:** Emit workspace keys or environment-specific credentials as
   deployment outputs.
 
@@ -29,14 +30,15 @@ status: Accepted
 
 ## Context and Problem Statement
 
-P2 required a Container Apps environment, registry, managed identity, Key
-Vault, monitoring, and Blob Storage while reusing the P2A workspace. Which
+The original storage foundation required a Container Apps environment,
+registry, managed identity, Key Vault, monitoring, and Blob Storage while
+reusing the original Foundry landing zone's workspace. Which
 infrastructure-as-code approach should define this foundation?
 
 ## Decision Drivers
 
 - Keep the foundation repeatable and reviewable.
-- Reuse the deployed P2A monitoring workspace.
+- Reuse the deployed original Foundry landing zone's monitoring workspace.
 - Avoid changing resources outside the approved resource group.
 
 ## Considered Options
@@ -47,10 +49,10 @@ infrastructure-as-code approach should define this foundation?
 
 ## Decision Outcome
 
-Chosen option: "Bicep for the P2 foundation," because it integrates with the
-existing Azure workflow and supports a reviewable resource-group deployment.
-The template defines infrastructure only; it does not create an API
-application.
+Chosen option: "Bicep for the legacy storage foundation," because it
+integrates with the existing Azure workflow and supports a reviewable
+resource-group deployment. The template defines infrastructure only; it does
+not create an API application.
 
 ### Positive Consequences
 
@@ -59,7 +61,8 @@ application.
 
 ### Negative Consequences
 
-- The P2 template depends on the existing P2A Log Analytics workspace.
+- The legacy storage foundation template depends on the existing original
+  Foundry landing zone's Log Analytics workspace.
 - A deployment still requires owner approval, quota checks, and live
   authorization validation.
 
@@ -84,5 +87,6 @@ application.
 - Related: [ADR-0008](0008-p2-public-network-posture.md),
   [ADR-0010](0010-blob-storage-persistence.md), and
   [ADR-0011](0011-manual-only-storage-recovery.md).
-- Historical checks: E-038, E-040, E-050, and E-051 in the
+- Historical checks: the storage foundation evidence (E-038, E-040, E-050,
+  and E-051) in the
   [implementation plan](../plans/implementation-plan.md).

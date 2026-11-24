@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Reversible local MCP adapter for the authenticated Skill Loom Foundry API."""
+"""Reversible local MCP adapter for the authenticated Skill Loom Azure API."""
 
 from __future__ import annotations
 
