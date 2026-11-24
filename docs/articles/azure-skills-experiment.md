@@ -14,10 +14,11 @@ when they contribute.
 
 The P0–P4 proof of concept serves chains and reviewed skills through an
 Entra-authenticated API and MCP clients; agents run chain steps in their own
-sessions. Admin-managed catalog changes are implemented. The owner has
-classified hosted execution and hardening/pilot work as post-POC. A standalone
-Azure deployment and local Azurite profile are now implemented for adopters;
-no Azure resources have been provisioned for these new paths.
+sessions. Admin-managed catalog changes are implemented. The owner's
+non-production POC resources have been decommissioned after the stored chain
+data was backed up. Hosted execution and hardening/pilot work remain post-POC.
+A standalone Azure deployment and local Azurite profile are implemented for
+adopters; no Azure resources have been provisioned for these new paths.
 
 ## Quick highlights
 
@@ -37,6 +38,7 @@ remains the source of truth for phase status.
 | P5 — Hosted runner (Jobs) | — | — | No Azure-specific skills or tools recorded in the P5-C1 authentication review. |
 | P6 — Hardening, pilot rollout, release | — | — | Not started. |
 | Cross-phase — P0/P1 Project setup, decisions, and interchange; P2A Foundry landing zone; P2 Azure foundation and storage; P3 Authenticated API (serve mode); P4 MCP server and Foundry/Copilot integration; P5 Hosted runner (Jobs); P6 Hardening, pilot rollout, release | `azure-app-onboard` | `ask_user`, CodeGraph, `md-doc-search`, Azure CLI, `azd`, Bicep | Plan and implement a fresh-environment Azure adopter path; no Azure resources provisioned. |
+| Cross-phase decommission — P0/P1 Project setup, decisions, and interchange; P2A Foundry landing zone; P2 Azure foundation and storage; P3 Authenticated API (serve mode); P4 MCP server and Foundry/Copilot integration; P5 Hosted runner (Jobs); P6 Hardening, pilot rollout, release | `azure-resource-lookup` | Azure MCP, Azure CLI (`az`) | Inventory the live POC scope, verify the Blob export, and confirm the approved resource-group teardown. |
 
 ### Other skills and tools
 
@@ -52,6 +54,7 @@ remains the source of truth for phase status.
 | P6 — Hardening, pilot rollout, release | — | — | Not started. |
 | Cross-phase — P0/P1 Project setup, decisions, and interchange; P2A Foundry landing zone; P2 Azure foundation and storage; P3 Authenticated API (serve mode); P4 MCP server and Foundry/Copilot integration; P5 Hosted runner (Jobs); P6 Hardening, pilot rollout, release | `project-execution-journal` | `ask_user`, CodeGraph, `md-doc-search`, Git, `view`, `apply_patch` | Record the owner's POC/adopter decisions and update the implementation plan without provisioning Azure resources. |
 | Cross-phase implementation — P0/P1 Project setup, decisions, and interchange; P2A Foundry landing zone; P2 Azure foundation and storage; P3 Authenticated API (serve mode); P4 MCP server and Foundry/Copilot integration; P5 Hosted runner (Jobs); P6 Hardening, pilot rollout, release | `azure-app-onboard`, `project-execution-journal`, `archify` | Azure CLI/Bicep, `azd`, Node.js/npm, Docker/Podman Compose, Git, `git-filter-repo`, `git archive`, GitHub CLI (`gh`), Gitleaks, Tesseract.js, `sha256sum`, `markdownlint-cli2`, CodeGraph, `md-doc-search`, `web_fetch`, Bash, Python, `rg`, `view`, `apply_patch` | Implement and statically validate adopter-facing Azure/local development paths; scan the public candidate and history; maintain evidence. No Azure resources provisioned. |
+| Cross-phase decommission — P0/P1 Project setup, decisions, and interchange; P2A Foundry landing zone; P2 Azure foundation and storage; P3 Authenticated API (serve mode); P4 MCP server and Foundry/Copilot integration; P5 Hosted runner (Jobs); P6 Hardening, pilot rollout, release | `project-execution-journal` | `ask_user`, Bash, Python, `systemd-creds`, `sha256sum`, `rg`, `view`, `apply_patch` | Record the owner-approved backup, temporary access, resource teardown, verification, and evidence limits. |
 
 ## End-to-end workflow
 
@@ -3449,3 +3452,40 @@ checks, and chain-schema validation passed.
 built-in role-definition GUID false positive in tree and history scans. No
 live Entra, MCP, or Azure operation was run; no Azure resources were
 provisioned. The original `skill-loom-foundry` repository remains private.
+
+### Cross-phase operations — Non-production POC decommissioned — 24 November 2026
+
+**Project owner/requester:** Chose to export the Blob data and then delete the
+project resource group.
+
+**GitHub Copilot CLI coding agent:** Inventoried the active subscription and
+resource group, created a temporary container-scoped Blob Reader assignment,
+exported the stored objects, verified and encrypted the local backup, removed
+the temporary assignment, and deleted the resource group.
+
+**Skills used:** `azure-resource-lookup`, `project-execution-journal`.
+
+**Tools used:** Azure MCP subscription/resource/container inventory, Azure
+CLI (`az`), `ask_user`, Bash, Python, `systemd-creds`, `sha256sum`, `rg`,
+`view`, and `apply_patch`.
+
+**Outcome/evidence:** The only resource group in the active subscription
+contained the POC API/Container Apps, storage, and optional Foundry resources.
+Its `documents` container held four chain JSON blobs and no catalog blob. The
+four objects and a checksum manifest were archived, encrypted with the local
+user's systemd host key, and verified by decrypting and checking every object.
+The backup is outside the repository with mode `0600`. The temporary
+`Storage Blob Data Reader` assignment was removed. The selected resource group
+was deleted; `az group exists` returned false and the subscription group list
+contained no match. The separate Entra app registration was not changed.
+
+**Failures/corrections:** Initial Blob reads were denied until the temporary
+role assignment propagated. Two first backup attempts failed during local
+archive packaging/verification; neither deleted Azure data. The corrected
+backup passed content and encryption round-trip checks. Resource-group
+deletion remained pending while the Container Apps environment was scheduled
+for deletion, then completed; no duplicate delete was issued.
+
+**Evidence limits:** The encrypted backup uses a user-scoped host key and is
+decryptable only on this local host under the same user account. No restore to
+a new Azure environment was performed. No live POC resources remain deployed.

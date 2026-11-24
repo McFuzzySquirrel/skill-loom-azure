@@ -7,9 +7,10 @@ executes steps in its own session.
 
 ## Status
 
-The P0–P4 proof-of-concept exit gates have passed. The owner has a deployed
-non-production POC. This repository now includes a guided, fresh-environment
-Azure deployment and a local Docker/Azurite development profile. Foundry is
+The P0–P4 proof-of-concept exit gates have passed. The owner's non-production
+POC deployment has been decommissioned after a verified backup of its stored
+chain data. This repository includes a guided, fresh-environment Azure
+deployment and a local Docker/Azurite development profile. Foundry is
 optional. P5 hosted execution and P6 hardening/pilot work are post-POC; hosted
 execution remains disabled.
 

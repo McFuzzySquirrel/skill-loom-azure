@@ -7,8 +7,9 @@ Foundry and Copilot MCP clients, and an Admin-managed reviewed-skill catalog.
 P4-G list/get/save/export checks passed through the available clients. A live
 skill search returned an empty catalog, so positive live skill-detail
 retrieval remains pending. Live Azure Blob lease behavior remains `not run`.
-The owner's Azure deployment is a non-production POC, not a production
-service.
+The former owner deployment was a non-production POC and has been
+decommissioned after its stored chain data was backed up. No live POC endpoint
+is currently deployed.
 
 This repository includes a fresh-environment Azure deployment and a local
 Docker/Azurite development profile. Neither path provisions Azure resources
