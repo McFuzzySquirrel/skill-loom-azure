@@ -11,12 +11,11 @@ The owner's Azure deployment is a non-production POC, not a production
 service.
 
 This repository includes a fresh-environment Azure deployment and a local
-Docker/Azurite development profile. Neither path provisions Azure resources
-automatically. Foundry is optional; the core API does not require it. P5
-hosted chain execution and P6 hardening/pilot work are post-POC. Hosted
-execution remains disabled.
-
-The HTTP request boundary is:
+Docker/Azurite development profile. The Azure path provisions resources only
+when an operator runs the reviewed `azd` workflow; cloning or validating the
+repository does not create Azure resources. Foundry is optional; the core API
+does not require it. P5 hosted chain execution and P6 hardening/pilot work are
+post-POC. Hosted execution remains disabled.
 
 Deployment and live-check evidence is recorded in the
 [implementation plan](plans/implementation-plan.md#9-execution-evidence-register).
@@ -73,9 +72,10 @@ npm start
 
 The managed-identity mode requires `ENTRA_TENANT_ID`, `ENTRA_AUDIENCE`,
 `ENTRA_TOKEN_VERSION` (`1.0` or `2.0`), `BLOB_ENDPOINT`, and
-`MANAGED_IDENTITY_CLIENT_ID`. `PORT` is optional and defaults to `3000`.
-The explicit Azurite mode is for local development only and does not provide
-an authentication bypass.
+`MANAGED_IDENTITY_CLIENT_ID`. `BLOB_STORAGE_MODE` defaults to
+`managed-identity`; `PORT` is optional and defaults to `3000`. The explicit
+Azurite mode is for local development only and does not provide an
+authentication bypass.
 
 The `Dockerfile` builds a production image and runs Node as UID/GID `10001`.
 `infra/p2/api.bicep` defines external HTTPS ingress, the P2 user-assigned
@@ -101,17 +101,23 @@ validated values to the Entra and Blob adapters.
 - `ENTRA_TENANT_ID`: tenant GUID.
 - `ENTRA_AUDIENCE`: non-empty expected API audience.
 - `ENTRA_TOKEN_VERSION`: explicitly `1.0` or `2.0`.
+- `BLOB_STORAGE_MODE`: `managed-identity` (default) or `azurite`.
 - `BLOB_ENDPOINT`: HTTPS Blob endpoint without credentials, query,
-  or fragment.
+  or fragment. Required in managed-identity mode.
 - `MANAGED_IDENTITY_CLIENT_ID`: non-empty user-assigned managed identity client
-  ID.
+  ID. Required in managed-identity mode.
+- `AZURITE_BLOB_ENDPOINT`, `AZURITE_ACCOUNT_NAME`, and `AZURITE_ACCOUNT_KEY`:
+  explicit local emulator settings. Required in Azurite mode and rejected in
+  managed-identity mode.
 - `PORT`: optional listening port from 1 through 65535; defaults to `3000`.
 
-The Blob adapter uses the `documents` container. The P2 Bicep template
-configures a user-assigned identity, Standard LRS Storage, a private
-`documents` container, and identity-based access. It disables shared-key and
-anonymous Blob access. The endpoints remain public for the cost-first PoC;
-see [ADR-0008](adr/0008-p2-public-network-posture.md). These are template
+The Blob adapter uses the `documents` container. The root adopter template
+assigns the API identity ACR Pull and Storage Blob Data Contributor at the
+`documents` container scope. The legacy P2 Bicep template configures a
+user-assigned identity, Standard LRS Storage, a private `documents` container,
+and identity-based access. Both disable shared-key and anonymous Blob access.
+The endpoints remain public for the cost-first PoC; see
+[ADR-0008](adr/0008-p2-public-network-posture.md). These are template
 settings, not evidence that resources currently exist.
 
 Do not copy tenant, subscription, resource, identity, or credential values
@@ -326,9 +332,11 @@ procedure above.
 - **A further live Blob or Entra check is needed:** P3-G verified only its
   recorded cases. Obtain an approved test plan and use disposable data; mocks
   and local container probes do not establish live compatibility.
-- **Foundry Toolbox invocation returns 404:** The Toolbox and agent exist, but
-  no tool call has been verified. Check the project endpoint and supported
-  invocation path from a trusted network; do not disable TLS validation.
+- **A Foundry direct-API invocation returns 404:** The Toolbox path completed
+  P4-G, but the separate direct-API MCP agent still fails for some operations.
+  Confirm which path the agent uses, and check the project endpoint and
+  supported invocation path from a trusted network; do not disable TLS
+  validation.
 - **A stale write is rejected:** Reload the document and reconcile its
   revision. Do not bypass ETag or application-revision checks.
 - **Unexpected Azure resources appear:** Stop and compare the current

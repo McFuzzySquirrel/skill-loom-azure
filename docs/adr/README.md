@@ -16,6 +16,7 @@ its scope, implementation rules, and a way to verify those rules.
 | [ADR-0009](0009-reviewed-skill-trust-boundary.md) | Admin-reviewed skill source | Accepted | 2026-11-21 |
 | [ADR-0010](0010-blob-storage-persistence.md) | Azure Blob persistence | Accepted | 2026-11-21 |
 | [ADR-0011](0011-manual-only-storage-recovery.md) | Manual-only storage recovery | Accepted | 2026-11-21 |
+| [ADR-0012](0012-standalone-adopter-deployment.md) | Standalone adopter deployment | Accepted | 2026-11-24 |
 
 ## Rules
 

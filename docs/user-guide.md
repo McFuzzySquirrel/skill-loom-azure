@@ -234,8 +234,9 @@ were no entries. Local repository copying was not run.
   `GET /v1/chains/{chainId}`.
 - **Create or update a chain:** `PUT /v1/chains/{chainId}` with conditional
   revision headers. Writes without the correct precondition are rejected.
-- **Export a chain bundle:** `GET /v1/chains/{chainId}/bundle`. Contract and
-  local catalog module.
+- **Export a chain bundle:** `GET /v1/chains/{chainId}/bundle`. P4-G
+  completed a live export containing the chain and its reviewed skill
+  snapshots.
 - **Search or inspect skills:** `GET /v1/skills` and
   `GET /v1/skills/{skillName}`. Search returns metadata; detail reads return
   reviewed file content.
@@ -309,9 +310,10 @@ a vulnerability. See
 
 - **No endpoint or sign-in page:** The service URL is supplied by its
   operator, not published in this repository. There is no web sign-in page.
-- **Foundry smoke invocation fails:** Toolbox and agent configuration are
-  registered, but no API operation has been verified through the agent. Ask
-  the operator to verify the current Foundry endpoint and invocation path.
+- **Foundry direct-API invocation fails:** The validated Foundry path is the
+  Toolbox, which completed P4-G list/get/save/export. The separate direct-API
+  MCP agent still returns errors for some operations. Ask the operator which
+  path is configured before retrying.
 - **Copilot CLI reports an OAuth metadata error:** Copilot CLI 1.0.114 accepts
   the sample configuration but fails discovery before sign-in. No supported
   workaround has been validated; do not paste or persist an access token.

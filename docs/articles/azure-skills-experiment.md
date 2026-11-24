@@ -3449,3 +3449,32 @@ checks, and chain-schema validation passed.
 built-in role-definition GUID false positive in tree and history scans. No
 live Entra, MCP, or Azure operation was run; no Azure resources were
 provisioned. The original `skill-loom-foundry` repository remains private.
+
+### Cross-phase documentation — Documentation set refresh — 24 November 2026
+
+**Project owner/requester:** Asked to refresh the project documentation.
+
+**OpenCode coding agent:** Rebuilt the README around the required section set,
+replaced the stale changelog and release notes, corrected the user and
+administrator guide statements that described the API as unwired or the
+Foundry Toolbox as unverified, added ADR-0012 for the standalone adopter
+deployment, and recorded documentation upkeep rules in `AGENTS.md`. The
+implementation plan records the refresh as E-184.
+
+**Skills used:** `create-project-documentation`.
+
+**Tools used:** `npm ci`; `npm run check` (ESLint, typecheck, 56 tests,
+`markdownlint-cli2`); `az bicep build` for `infra/main.bicep` and
+`infra/p2/main.bicep`; Markdown lint on the refreshed guides and release
+notes; a local Markdown link scan; `git diff --check`.
+
+**Outcome/evidence:** The README now carries the full required section set and
+links to the user guide, administrator guide, ADR index, and release notes.
+The release notes distinguish the P0–P4 POC baseline from P5/P6 post-POC work
+and mark live adopter deployment, live lease behavior, and positive live
+skill-detail retrieval as pending or `not run`. All local checks passed.
+
+**Evidence limits:** Documentation-only work. No live Azure, Entra, Blob,
+Foundry, or MCP operation was performed, and no Azure resources were
+provisioned. The 56 passing tests are local contract and mock/emulator tests;
+they do not prove live behavior.
