@@ -47,7 +47,7 @@ remains the source of truth for phase status.
 | P2 — Azure foundation and storage | `research`, `tdd`, `archify` | Archify CLI; Microsoft Learn search/fetch, codegraph, `rg`, npm/`npx tsx`, OpenSSL, Node.js/Azure SDKs | Compare storage options; implement and test storage, backup, and restore; diagram the temporary Azure deployment ([snapshot](images/p2---temporary-azure-foundation-deployment.png)). |
 | P3 — Authenticated API (serve mode) | `project-execution-journal`, `archify` | Archify CLI; codegraph, npm/TypeScript/ESLint, Podman, Python, `curl` | Implement and test API/container boundaries and live checks; snapshot excluded after local OCR found a tenant-like label. |
 | P4 — MCP server and Foundry/Copilot integration | `diagnosing-bugs`, `codebase-design`, `project-execution-journal`, `research`, `microsoft-foundry`, `archify` | Archify CLI and SVG export; Copilot CLI/docs, Microsoft Learn search/fetch, Azure MCP resource-group listing, Azure best-practices MCP (`get_azure_bestpractices_get`), `skillloom-api` MCP, `ask_user`, CodeGraph, Python stdio harness, catalog admin CLI and tests, Node.js/npm, Playwright/Chromium, `md-doc-search`, `rg`, `view`, `apply_patch`, `markdownlint-cli2`, `npm run docs:check`, `git diff --check`, Git and repository tools | Research client behavior, build/test the adapter and local catalog administration, diagnose integration failures, and diagram Foundry/API and end-to-end workflows ([snapshots](images/p4---azure-foundry-and-api-integration.png), [end-to-end flow](images/skill-loom-foundry-end-to-end-workflow.png)). |
-| Cross-phase maintenance — P0/P1 Project setup, decisions, and interchange; P2A Foundry landing zone; P2 Azure foundation and storage; P3 Authenticated API (serve mode); P4 MCP server and Foundry/Copilot integration; P5 Hosted runner (Jobs); P6 Hardening, pilot rollout, release | `create-project-documentation`, `writing-for-agents`, `project-execution-journal`, `archify` | Archify CLI, codegraph, `md-doc-search`, `glob`, `rg`, `view`, `apply_patch`, Python XML parsing, `markdownlint-cli2`, `npm run docs:check`, `git diff --check`, repository tools | Maintain this article and agent guidance, document phase-specific Azure deployments, and validate article and image artifacts. |
+| Cross-phase maintenance — P0/P1 Project setup, decisions, and interchange; P2A Foundry landing zone; P2 Azure foundation and storage; P3 Authenticated API (serve mode); P4 MCP server and Foundry/Copilot integration; P5 Hosted runner (Jobs); P6 Hardening, pilot rollout, release | `create-project-documentation`, `writing-for-agents`, `project-execution-journal`, `archify` | Archify CLI, CodeGraph, `md-doc-search`, `glob`, `rg`, `view`, `apply_patch`, Python XML parsing, `markdownlint-cli2`, `npm run docs:check`, `git diff --check`, repository tools | Maintain this article and agent guidance, document phase-specific Azure deployments and the end-to-end adopter demo, and validate article and image artifacts. |
 | P5 — Hosted runner (Jobs) | `project-execution-journal` | CodeGraph, GitHub Docs (`web_fetch`), repository tools | Review Copilot CLI job authentication; owner deferred hosted execution and keeps personal account local. |
 | P6 — Hardening, pilot rollout, release | — | — | Not started. |
 | Cross-phase — P0/P1 Project setup, decisions, and interchange; P2A Foundry landing zone; P2 Azure foundation and storage; P3 Authenticated API (serve mode); P4 MCP server and Foundry/Copilot integration; P5 Hosted runner (Jobs); P6 Hardening, pilot rollout, release | `project-execution-journal` | `ask_user`, CodeGraph, `md-doc-search`, Git, `view`, `apply_patch` | Record the owner's POC/adopter decisions and update the implementation plan without provisioning Azure resources. |
@@ -3406,3 +3406,46 @@ Git (`git ls-remote`).
 **Evidence limits:** No Azure resources were provisioned and no live Azure
 checks were performed. The original repository stays private because its
 merged PR refs retain older history.
+
+### Cross-phase adopter documentation — End-to-end demo — 24 November 2026
+
+**GitHub Copilot CLI coding agent:** Added a local-first walkthrough and
+example data for adding a reviewed skill, discovering it through MCP, saving
+a chain, and exporting its bundle.
+
+**Skills used:** `project-execution-journal`.
+
+**Tools used:** CodeGraph, `rg`, `view`, `apply_patch`, `npm run docs:check`,
+`markdownlint-cli2`, and TypeScript chain-schema validation.
+
+**Outcome/evidence:** The demo requires Entra authentication, separates
+Admin and User roles, and uses a disposable Azurite store for persistent
+examples. It explicitly states that no hosted chain execution is available.
+
+**Evidence limits:** Documentation and schema checks do not prove live
+Entra, MCP, or Azure behavior. No live service was called and no Azure
+resources were provisioned.
+
+### Cross-phase adopter documentation — Demo script published — 24 November 2026
+
+**Project owner/requester:** Asked to add the walkthrough to the new public
+repository.
+
+**GitHub Copilot CLI coding agent:** Synced the demo guide, sample skill,
+sample chain, and README link to `McFuzzySquirrel/skill-loom-azure`.
+
+**Skills used:** `project-execution-journal`.
+
+**Tools used:** Git, GitHub CLI (`gh`), Gitleaks 8.30.1,
+`npm run docs:check`, `markdownlint-cli2`, TypeScript chain-schema validation,
+and Python local-link validation.
+
+**Outcome/evidence:** Commit `5f2b949` added the demo materials. The public
+tree contained 110 files; at verification, remote `main` matched that commit
+and was the only ref. No tags or PRs existed. Markdown checks, local-link
+checks, and chain-schema validation passed.
+
+**Evidence limits:** Gitleaks reported only the known Azure Key Vault
+built-in role-definition GUID false positive in tree and history scans. No
+live Entra, MCP, or Azure operation was run; no Azure resources were
+provisioned. The original `skill-loom-foundry` repository remains private.
