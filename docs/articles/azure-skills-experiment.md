@@ -3384,3 +3384,25 @@ resolve.
 **Evidence limits:** The new repository remains private pending the
 authorized visibility change. The original repository also remains private.
 No Azure resources were provisioned and no live Azure checks were performed.
+
+### Cross-phase release setup — Public visibility verified — 24 November 2026
+
+**Project owner/requester:** Selected the fresh `skill-loom-azure` repository
+for public release and authorized its visibility change.
+
+**GitHub Copilot CLI coding agent:** Changed only the new repository's
+visibility, then checked its public state and refs.
+
+**Skills used:** `project-execution-journal`.
+
+**Tools used:** GitHub CLI (`gh repo edit`, `gh repo view`, `gh pr list`) and
+Git (`git ls-remote`).
+
+**Outcome/evidence:** `McFuzzySquirrel/skill-loom-azure` is `PUBLIC`, with
+`main` as its default branch. At the visibility check, `main` matched
+`0449ec0`; the only remote ref was `refs/heads/main`, and no PRs existed.
+`McFuzzySquirrel/skill-loom-foundry` remains `PRIVATE`.
+
+**Evidence limits:** No Azure resources were provisioned and no live Azure
+checks were performed. The original repository stays private because its
+merged PR refs retain older history.
