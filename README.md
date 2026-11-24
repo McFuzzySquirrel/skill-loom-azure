@@ -4,6 +4,11 @@
 [![License](https://img.shields.io/github/license/McFuzzySquirrel/skill-loom-azure)](LICENSE)
 [![Node](https://img.shields.io/badge/node-%3E%3D24-339933)](package.json)
 
+[![Azure Container Apps](https://img.shields.io/badge/Azure-Container%20Apps-0078D4?logo=microsoftazure&logoColor=white)](docs/deployment.md)
+[![Azure Bicep](https://img.shields.io/badge/Azure-Bicep-0078D4?logo=microsoftazure&logoColor=white)](infra/main.bicep)
+[![Microsoft Entra ID](https://img.shields.io/badge/Microsoft-Entra%20ID-0078D4?logo=microsoftazure&logoColor=white)](docs/adr/0002-authentication-and-authorization.md)
+[![Microsoft Foundry](https://img.shields.io/badge/Microsoft-Foundry-0078D4?logo=microsoftazure&logoColor=white)](docs/user-guide.md#foundry-toolbox-and-copilot-identity-boundaries)
+
 Skill Loom Azure is an Entra-authenticated Azure proof of concept for
 discovering and transferring Skill Loom chains and reviewed skills through an
 HTTP API and MCP clients. It does not execute chains in the cloud: the caller
