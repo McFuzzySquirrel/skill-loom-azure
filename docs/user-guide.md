@@ -12,7 +12,8 @@ OAuth metadata discovery fails before sign-in. A live skill search returned
 an empty catalog, so successful live skill-detail retrieval remains pending.
 See the [deployment and local development guide](deployment.md) to deploy
 the API in a separate Azure environment or run it locally with Azurite.
-The OpenAPI document remains the API contract.
+The [MCP discovery guide](mcp-guide.md) explains how clients list tools and
+discover skill and chain data. The OpenAPI document remains the API contract.
 
 ## Before You Begin
 
