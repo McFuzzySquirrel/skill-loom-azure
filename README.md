@@ -114,7 +114,9 @@ condition; chain writes and catalog removals also share a renewable Blob
 lease. The optional Foundry Toolbox sits between a Foundry agent and the API,
 but the API still authorizes the Toolbox's project managed identity. Copilot
 CLI reaches the API through the local stdio adapter described in the
-[user guide](docs/user-guide.md). There is no hosted executor: chain steps run
+[user guide](docs/user-guide.md). See the
+[MCP discovery guide](docs/mcp-guide.md) for how clients list tools and
+discover skill and chain data. There is no hosted executor: chain steps run
 only in the caller's session.
 
 The reasons behind these boundaries are recorded in the
